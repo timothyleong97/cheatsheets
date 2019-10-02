@@ -1,0 +1,262 @@
+\documentclass[10pt,landscape]{article}
+\usepackage{amssymb,amsmath,amsthm,amsfonts,bm}
+\usepackage{multicol,multirow}
+\usepackage{calc}
+\usepackage{ifthen}
+\usepackage[landscape]{geometry}
+\usepackage[colorlinks=true,citecolor=blue,linkcolor=blue]{hyperref}
+\usepackage{graphicx}
+\graphicspath{ {./images/} }
+
+\ifthenelse{\lengthtest { \paperwidth = 11in}}
+    { \geometry{top=.2in,left=.2in,right=.2in,bottom=.2in} }
+	{\ifthenelse{ \lengthtest{ \paperwidth = 297mm}}
+		{\geometry{top=1cm,left=1cm,right=1cm,bottom=1cm} }
+		{\geometry{top=1cm,left=1cm,right=1cm,bottom=1cm} }
+	}
+\pagestyle{empty}
+\makeatletter
+\renewcommand{\section}{\@startsection{section}{1}{0mm}%
+                                {-1ex plus -.5ex minus -.2ex}%
+                                {0.5ex plus .2ex}%x
+                                {\normalfont\large\bfseries}}
+\renewcommand{\subsection}{\@startsection{subsection}{2}{0mm}%
+                                {-1explus -.5ex minus -.2ex}%
+                                {0.5ex plus .2ex}%
+                                {\normalfont\normalsize\bfseries}}
+\renewcommand{\subsubsection}{\@startsection{subsubsection}{3}{0mm}%
+                                {-1ex plus -.5ex minus -.2ex}%
+                                {1ex plus .2ex}%
+                                {\normalfont\small\bfseries}}
+\makeatother
+\setcounter{secnumdepth}{0}
+\setlength{\parindent}{0pt}
+\setlength{\parskip}{0pt plus 0.5ex}
+
+
+
+\theoremstyle{definition}
+\newcommand{\thistheoremname}{}
+\newtheorem*{genericthm*}{\thistheoremname}
+\newenvironment{namedthm*}[1]
+{\renewcommand{\thistheoremname}{#1}\begin{genericthm*}}
+{\end{genericthm*}}
+
+% -----------------------------------------------------------------------
+
+\title{MA2213 Cheatsheet 19/20 Sem 1 Midterm}
+
+\begin{document}
+
+\begin{center}
+{\large MA2213 Cheatsheet 19/20 Sem 1 Midterm}\\{by Timothy Leong (format taken from Ning Yuan)}
+\end{center}
+
+\raggedright
+\footnotesize
+
+\begin{multicols}{3}
+
+\setlength{\premulticols}{1pt}
+\setlength{\postmulticols}{1pt}
+\setlength{\multicolsep}{1pt}
+\setlength{\columnsep}{2pt}
+
+\section{Lecture 2: Computer Arithmetic}
+
+\begin{namedthm*}{Single-precision floating point format}
+$$\underbrace{b_{31}}_\text{sign}\underbrace{b_{30}\cdots b_{23}}_\text{8-bit exp}\underbrace{b_{22}\cdots b_{0}}_\text{23-bit mantissa}$$ represents the binary number $$(-1)^{b_{31}} \times 10^{b_{30} b_{29} \cdots b_{23} b_{23}-11111111} \times 1 . b_{22} \cdots b_{1}$$
+\end{namedthm*}
+
+\begin{namedthm*}{Example: Converting from decimal to IEEE}
+$$(9.15625)_{10}=(1001.00101)_{2}=\left(1.00100101 \times 10^{11}\right)_{2}$$
+The mantissa is 00100101000000000000000 and the exponent is
+$$
+(11+1111111)_{2}=(10000010)_{2}
+$$
+Note: The exponent is in the excess-127 format
+\end{namedthm*}
+
+
+
+\begin{namedthm*}{Exceptions to the IEEE format}
+\includegraphics[scale=0.25]{exceptions.png}
+\\In fact, when the exponent is 11111111 and the mantissa is not zero, the result is always
+interpreted as NaN or -NaN, which means "Not-a-Number".
+\end{namedthm*}
+
+
+\begin{namedthm*}{Denormal Numbers}
+If exponent is all zeros, the binary expression for denormal numbers is 
+$$(-1)^{b_{31}} \times 10^{-1111110} \times 0 . b_{22} b_{21} \cdots b_{1} b_{0}$$
+and the corresponding decimal number is $$(-1)^{b_{31}} \times 2^{-126} \times \sum_{i=1}^{23} b_{23-i} 2^{-i}$$
+\end{namedthm*}
+
+
+\section{Lecture 4: Linear Systems \& Cramer's Rule}
+
+
+\begin{namedthm*}{Matrix-vector multiplication}
+\makeatletter\includegraphics[scale=0.5]{mat-vec-mult.png}
+\textbf{Time complexity: $O(n^2)$}
+\end{namedthm*}
+
+\begin{namedthm*}{Cramer's rule}
+Suppose $A$ is an $n \times n$ matrix with non-zero determinant. Then
+the unique solution of $A \mathbf{x}=\mathbf{b}$ is given by
+$$
+x_{i}=\frac{\operatorname{det} A_{i}}{\operatorname{det} A}, \quad i=1, \cdots, n
+$$
+where $A_{t}$ is the matrix performed by replacing the $i$th column of $A$ by the column vector
+b.
+\textbf{Time complexity: $O(n^3)$}
+\end{namedthm*}
+
+\section{Lecture 5: Gaussian Elimination}
+\begin{namedthm*}{Gaussian Elimination with no pivoting}
+The first 8 lines are elimination steps, and lines 9-16 are for backward substitution.
+\includegraphics[scale=0.5, width=8cm]{gaussian-no-pivot.png}
+\textbf{Time complexity: $O(n^3)$}
+\end{namedthm*}
+
+
+\begin{namedthm*}{Gaussian Elimination with partial pivoting (naive)}
+\includegraphics[scale=0.5, width=8cm]{gaussian-with-naive-pivoting.png} This algorithm only performs a swap when $a_{r_{k}j}=0$. However, imprecise subtraction can cause a zero pivot to be non-zero.
+\end{namedthm*}
+
+
+\section{Lecture 6: Pivoting strategy}
+
+\begin{namedthm*}{Gaussian Elimination with partial pivoting (more reliable)}
+ We replace lines 5-15 in the above algorithm with this block of code, setting the entry with the largest magnitude as the pivot. \textbf{Time complexity: O(n^3).}\\
+$$
+     \includegraphics[width=5cm]{gaussian-partial-pivot-improved.png}
+$$
+\end{namedthm*}
+
+\begin{namedthm*}{Gaussian Elimination with scaled partial pivoting (even more reliable)}
+First, we locate the largest-magnitude number in each row and set that number as the scaling factor for that row.
+\includegraphics[scale=0.7]{images/scaling_factors.png}
+\includegraphics[scale=0.5, width=8.5cm]{images/row_swap_partial_pivoting.png}
+\end{namedthm*}
+
+\section{Lecture 7: Matrix Factorization}
+
+\begin{namedthm*}{Types of row operations}
+~
+\begin{enumerate}
+    \item $E_{i} \leftarrow E_{i}-m_{i j} E_{j}$ (multiply the $j$th row by $m_{i j}$ and subtract the result from the $i$th
+$\text { row }),$ where $i>j$. This is equivalent to multiplying
+the augmented matrix by the following matrix on the left-hand side: $$
+I-m_{i j} \mathrm{e}_{i} \mathrm{e}_{j}^{T}
+$$ where $I$ is the identity matrix, and $\mathrm{e}_{i}$ is the unit vector $(0, \cdots, 0,1,0, \cdots, 0)^{T},$ whose the only
+nonzero entry is its $i$th component. When $i>j$, the elements of the matrix $I-m_{i j} \mathbf{e}_{i} \mathbf{e}_{j}^{T}$ can
+be described as follows:
+\begin{itemize}
+    \item The matrix is lower-triangular;
+    \item All its diagonal entries are equal to 1;
+    \item All its off-diagonal entries are zero except that its $(i, j)$ -element is $-m_{i j}$.
+\end{itemize}
+\item $\left.E_{i} \leftrightarrow E_{j} \text { (exchange the } i \text {th row and the } j \text {th row}\right)$ which is equivalent to pre-multiplying
+$$
+I-\left(\mathbf{e}_{i}-\mathbf{e}_{j}\right)\left(\mathbf{e}_{i}-\mathbf{e}_{j}\right)^{T}
+$$
+Features:\begin{itemize}
+    \item The matrix is symmetric;
+    \item All its diagonal entries are equal to 1 except the $i$th and $j$th ones are equal to zero;
+    \item All its off-diagonal entries are zero except that its $(i, j)$-element and $(j, i)$-element are equal to 1.
+\end{itemize}
+
+\end{enumerate}
+\end{namedthm*}
+
+\begin{namedthm*}{Theorem 1}
+% if no space, take out all the words, leave the picture
+Suppose $j \in\{1, \cdots, n-1\}$ and $i_{1}, i_{2}, \cdots, i_{k}$ are integers in $\{j+1, \cdots, n\} .$ Then
+$$
+\begin{aligned}(I-&\left.m_{i 1} j \mathbf{e}_{i_{1}} \mathbf{e}_{j}^{T}\right)\left(I-m_{i_{2} j} \mathbf{e}_{i_{2}} \mathbf{e}_{j}^{T}\right) \cdots\left(I-m_{i_{k} j} \mathbf{e}_{i_{k}} \mathbf{e}_{j}^{T}\right) \\ &=I-\left(m_{i_{1} j} \mathbf{e}_{i_{1}}+m_{i_{2} j} \mathbf{e}_{i_{2}}+\cdots+m_{i_{k} j} \mathbf{e}_{i_{k}}\right) \mathbf{e}_{j}^{T} \end{aligned}
+$$. When $i_{1}, i_{2}, \cdots, i_{k}$ are distinct, the matrix
+$$
+I-\left(m_{i_{1} j} \mathbf{e}_{i_{1}}+m_{i_{2} \mathbf{j}} \mathbf{e}_{i_{2}}+\cdots+m_{i_{k} \mathbf{j}} \mathbf{e}_{i_{k}}\right) \mathbf{e}_{j}^{T}
+$$ has the following structure:
+\begin{itemize}
+    \item All the diagonal entries are equal to 1
+    \item The $\left(i_{s}, j\right)$ -element is $m_{i_{i} s}$ for any $s=1, \cdots, k$
+    \item All other entries are equal to zero.
+\end{itemize}
+Or pictorially,
+$$
+\left(\begin{array}{cccc}{1} & {0} & {0} & {0} \\ {0} & {1} & {0} & {0} \\ {0} & {0} & {1} & {0} \\ {1 / 3} & {0} & {0} & {1}\end{array}\right)\left(\begin{array}{cccc}{1} & {0} & {0} & {0} \\ {0} & {1} & {0} & {0} \\ {-1 / 3} & {0} & {1} & {0} \\ {0} & {0} & {0} & {1}\end{array}\right)\left(\begin{array}{cccc}{1} & {0} & {0} & {0} \\ {-2 / 3} & {1} & {0} & {0} \\ {0} & {0} & {1} & {0} \\ {0} & {0} & {0} & {1}\end{array}\right)\\=\left(\begin{array}{rrrr}{1} & {0} & {0} & {0} \\ {-2 / 3} & {1} & {0} & {0} \\ {-1 / 3} & {0} & {1} & {0} \\ {1 / 3} & {0} & {0} & {1}\end{array}\right)
+$$\\
+If $A \mathrm{x}=\mathrm{b}$ can be solved by GE without pivoting, then the GE is equivalent to pre-multiplying the matrix $A$ by $n-1$ lower triangular matrices, and each lower triangular matrix has the form $I-\mathbf{m}_{j} \mathbf{e}_{j}^{T}$, and the process is equivalent to $\left(I-\mathbf{m}_{n-1} \mathbf{e}_{n-1}^{T}\right) \cdots\left(I-\mathbf{m}_{2} \mathbf{e}_{2}^{T}\right)\left(I-\mathbf{m}_{1} \mathbf{e}_{1}^{T}\right) A=U$, where $U$ is an upper triangular matrix.
+\end{namedthm*}
+
+
+\begin{namedthm*}{Theorem 2}
+Suppose $j<n .$ Let $\mathbf{m}_{j}$ be the $n$ -dimensional column vector $\left(0, \cdots, 0, m_{j+1, j}, \cdots, m_{n j}\right)^{T}$. Then $\left(I-\mathbf{m}_{j} \mathbf{e}_{j}^{T}\right)^{-1}=I+\mathbf{m}_{j} \mathbf{e}_{j}^{T}$, i.e.
+$\left(\begin{array}{rrrr}{1} & {0} & {0} & {0} \\ {-2 / 3} & {1} & {0} & {0} \\ {-1 / 3} & {0} & {1} & {0} \\ {1 / 3} & {0} & {0} & {1}\end{array}\right)^{-1}=\left(\begin{array}{rrrr}{1} & {0} & {0} & {0} \\ {2 / 3} & {1} & {0} & {0} \\ {1 / 3} & {0} & {1} & {0} \\ {-1 / 3} & {0} & {0} & {1}\end{array}\right)$
+\end{namedthm*}
+
+
+
+\begin{namedthm*}{Theorem 3}
+Suppose $i_{1} \leqslant i_{2} \leqslant \cdots \leqslant i_{k}<n,$ and for any $j=1, \cdots, k,$ the vector $\mathbf{m}_{j}$ is an $n$-dimensional column vector whose first $i_{j}$ components are zero. Then
+$\left(I+\mathbf{m}_{1} \mathbf{e}_{i_{1}}^{T}\right)\left(I+\mathbf{m}_{2} \mathbf{e}_{i_{2}}^{T}\right) \cdots\left(I+\mathbf{m}_{k} \mathbf{e}_{i_{k}}^{T}\right)=I+\mathbf{m}_{1} \mathbf{e}_{i_{1}}^{T}+\mathbf{m}_{2} \mathbf{e}_{i_{2}}^{T}+\cdots \mathbf{m}_{k} \mathbf{e}_{i_{k}}^{T}$
+\end{namedthm*}
+\begin{namedthm*}{Example of Theorem 3}
+$\left(\begin{array}{rrrrr}{1} & {0} & {0} & {0} \\ {2 / 3} & {1} & {0} & {0} \\ {1 / 3} & {0} & {1} & {0} \\ {-1 / 3} & {0} & {0} & {1}\end{array}\right)\left(\begin{array}{rrrr}{1} & {0} & {0} & {0} \\ {0} & {1} & {0} & {0} \\ {0} & {4 / 5} & {1} & {0} \\ {0} & {1} & {0} & {1}\end{array}\right)\left(\begin{array}{llll}{1} & {0} & {0} & {0} \\ {0} & {1} & {0} & {0} \\ {0} & {0} & {1} & {0} \\ {0} & {0} & {5} & {1}\end{array}\right)$ $=$  $\left(\begin{array}{rrrr}{1} & {0} & {0} & {0} \\ {2 / 3} & {1} & {0} & {0} \\ {1 / 3} & {4 / 5} & {1} & {0} \\ {-1 / 3} & {1} & {5} & {1}\end{array}\right)$.
+\end{namedthm*}
+
+
+\begin{namedthm*}{Theorem 4}
+If $Ax=b$ can be solved by GE without pivoting, $A$ can be factorised into L and U. $Ax=b \leftrightarrow LUx=b$. We can solve $Ly=b$ by forward substitution and then $Ux=y$ by backward substitution.
+\includegraphics[width = 8cm]{images/Ly=b.png}
+\includegraphics[width = 8cm]{images/Ux=y.png}
+\\The time complexity of solving a linear system by LU-factorization is $O(n^2)$
+\end{namedthm*}
+
+\section{Tutorials}
+\begin{namedthm*}{Tut 1 Exercise 3}
+$$B(x, y)=\sum_{n=0}^{+\infty}(-1)^{n} \frac{(y-1) \cdots(y-n)}{n !(x+n)}$$
+Given $x$ and $y,$ write down the pseudocode to approximate the value of $B(x, y)$\\
+\includegraphics[height=3cm]{images/tut1-ex3.png}
+\end{namedthm*}
+
+
+\begin{namedthm*}{Tut 2 Exercise 2}
+Let $A=\left(a_{i j}\right)_{n \times n}$ be an upper-triangular matrix and $B=\left(b_{i j}\right)_{n \times n}$ be a lower-
+triangular matrix. Write an algorithm to compute $C=A B$ and count the number of arithmetic
+operations.
+\includegraphics[width=8.5cm]{images/tut2-ex2-ans.png}
+\end{namedthm*}
+\begin{namedthm*}{Tut 2 Exercise 3}
+Write the pseudocode that uses GE without pivoting to
+solve the linear system $A \mathrm{x}=\mathrm{b}$ with $\mathrm{b}=\left(b_{1}, \cdots, b_{n}\right)^{T}$ and $A$ being an upper-Hessenberg matrix
+\includegraphics[scale=0.2]{images/upper_hessenberg.png}
+\includegraphics[width=8cm]{images/tut2-ex3-ans.png} The idea is to only do a row subtraction with the row immediately below.
+\end{namedthm*}
+
+
+
+
+% just extra knowledge
+\section{Miscellaneous}
+\begin{namedthm*}{Summation formulae}
+$$\includegraphics[scale=0.7]{sum_formulae.png}$$
+\\Also from tutorial 2
+$$\sum_{i=1}^{n}\left(\left(n + \frac{1}{2}i\right)-\frac{1}{2}i^2\right)=\frac{n(n+1)(2n+1)}{6}$$
+\end{namedthm*}
+
+% \begin{namedthm*}{Determinants}~
+% \begin{enumerate}
+%     \item $\mathbf{det}(A^T)=\mathbf{det}(A)$
+%     \item $\mathbf{det}(cA)=c^{n}\mathbf{det}(A)$
+%     \item $\mathbf{det}(AB)=\mathbf{det}(A)\mathbf{det}(B)$
+%     \item $\mathbf{det}(A^{-1})=1/\mathbf{det}(A)$
+% \end{enumerate}
+% \end{namedthm*}
+
+
+
+\end{multicols}
+\end{document}
