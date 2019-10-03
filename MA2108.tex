@@ -189,7 +189,7 @@ upper bound for $a+S .$ Thus $\sup (a+S)=a+\sup S .~ \square$
 
 \begin{namedthm*}{Lemma 1.9.1}
  Let u be an upper bound of $S \subseteq \mathbb{R}$ . Then $u=\sup S$ if and only if $\forall \varepsilon>0,$
-$\exists x_{\varepsilon} \in S$ such that $u-\varepsilon<x_{\varepsilon}$ .
+$\exists x_{\varepsilon} \in S$ such that $u-\varepsilon<x_{\varepsilon}$ . (The infimum version of this statement was proven in Homework 2)
 \end{namedthm*}
 
 \begin{namedthm*}{Supremum property of $\mathbb{R}$}
@@ -404,8 +404,36 @@ For any $n \in \mathbb{N}, n > 1$,$$\left(1+\frac{1}{n-1}\right)^{n-1}<\left(1+\
 \includegraphics[scale=0.3]{images/tut4-1g.png}
 \end{namedthm*}
 
+\begin{namedthm*}{Homework 2 Question 2}
+Let $S=\left\{\frac{m}{2 n+3 m} : n, m \in \mathbb{N}\right\} .$ Prove that $\sup S=1 / 3$ and inf $S=0$
+\\\textbf{Solution.} First show that $\frac{1}{3}$ is an upper bound. Then, let $\varepsilon>0 .$ By the Archimedean Property, there is a natural number $m_{0}$ such that $m_{0}>\frac{1}{\varepsilon} .$ Let
+$x_{\varepsilon}=\frac{m_{0}}{2+3 m_{0}} .$ Then
+\[
+x_{\varepsilon} \in S \quad \text { and } \quad x_{\varepsilon}=\frac{m_{0}}{2+3 m_{0}}=\frac{1}{3}-\frac{2}{3\left(2+3 m_{0}\right)}>\frac{1}{3}-\frac{1}{m_{0}}>\frac{1}{3}-\varepsilon
+\]
+By Lemma $1.9 .1,$ sup $S=\frac{1}{3} .$\\
+On the other hand, 0 is clearly a lower bound of $S$ . Let $\varepsilon>0 .$ By the Archimedean Property, there
+is a natural number $n_{0}$ such that $n_{0}>\frac{1}{\varepsilon} .$ Let $y_{\varepsilon}=\frac{1}{2 n_{0}+3} .$ Then
+\[
+y_{\varepsilon} \in S \quad \text { and } \quad y_{\varepsilon}=\frac{1}{2 n_{0}+3}<\frac{1}{n_{0}}<0+\varepsilon
+\]
+By the result of Question $\mathrm{H} 2,$ inf $S=0$
+\end{namedthm*}
 
+\begin{namedthm*}{Results from Tutorial 2}~
+\begin{enumerate}
+    \item If $0<a<b,$ then $a^{n}<b^{n}$ for every $n \in \mathbb{N}$
+    \item If $0<a<b$ and $r \in \mathbb{Q}$ with $r>0,$ then $a^{r}<b^{r}$
+    \item If $A$ and $B$ are bounded nonempty subsets of $\mathbb{R}$ then $\sup (A \cup B)=\max (\sup A, \sup B)$
+\end{enumerate}
+\end{namedthm*}
 
+\begin{namedthm*}{Tutorial 3 Question 7} 
+If $\lim _{n \rightarrow \infty} x_{n}=x$ , then
+\[
+\lim _{n \rightarrow \infty} \frac{x_{1}+x_{2}+\cdots+x_{n}}{n}=x
+\]
+\end{namedthm*}
 
 
 
