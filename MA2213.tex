@@ -1,3 +1,5 @@
+% Credits to Ning Yuan for the format
+
 \documentclass[10pt,landscape]{article}
 \usepackage{amssymb,amsmath,amsthm,amsfonts,bm}
 \usepackage{multicol,multirow}
@@ -46,7 +48,7 @@
 \begin{document}
 
 \begin{center}
-	{\large MA2213 Cheatsheet 19/20 Sem 1 Midterm}\\{by Timothy Leong (format by Ning Yuan)}
+	{\large MA2213 Cheatsheet 19/20 Sem 1 Finals}
 \end{center}
 
 \raggedright
@@ -88,24 +90,115 @@
 	\end{namedthm*}
 
 	\begin{namedthm*}{Error analysis}
-		\(x_{0}, x_{1}, \cdots, x_{n}\) are distinct in \([a, b]\)
-		\(\implies \forall x \in[a, b], \exists \xi \in\left(\min \left\{x, x_{0}, x_{1}, \cdots, x_{n}\right\}, \max \left\{x, x_{0}, x_{1}, \cdots, x_{n}\right\}\right)\) such that
+		\(\forall x \in[a, b], \exists \xi \in\left(\min \left\{x, x_{0}, x_{1}, \cdots, x_{n}\right\}, \max \left\{x, x_{0}, x_{1}, \cdots, x_{n}\right\}\right)\) such that
 		\[
 			f(x)=P_{n}(x)+\frac{f^{(n+1)}(\xi)}{(n+1) !}\left(x-x_{0}\right)\left(x-x_{1}\right) \cdots\left(x-x_{n}\right)
-		\] 
+		\]
 	\end{namedthm*}
 	\section{Tutorial 3: Lagrange Interpolation}
 	\section{Lecture 9: Divided Differences}
-	\begin{namedthm*}{Structure of Lagrange polynomial}
+	\begin{namedthm*}{How to find Lagrange polynomial}
 		\(
-			P_{n}(x)=a_{0}+a_{1}\left(x-x_{0}\right)+a_{2}\left(x-x_{0}\right)\left(x-x_{1}\right)+\cdots+a_{n}\left(x-x_{0}\right)\left(x-x_{1}\right) \cdots\left(x-x_{n-1}\right)
-        \)
-        where \(a_{k}=f\left[x_{0}, x_{1}, \cdots, x_{k}\right]\) and \(f\left[x_{0}, x_{1}, \cdots, x_{n}\right]=\frac{f\left[x_{1}, x_{2}, \cdots, x_{n}\right]-f\left[x_{0}, x_{1}, \cdots, x_{n-1}\right]}{x_{n}-x_{0}}\). \(a_0 = f(x_0)\).
-    \end{namedthm*}
+		P_{n}(x)=a_{0}+a_{1}\left(x-x_{0}\right)+a_{2}\left(x-x_{0}\right)\left(x-x_{1}\right)+\cdots+a_{n}\left(x-x_{0}\right)\left(x-x_{1}\right) \cdots\left(x-x_{n-1}\right)
+		\)
+		where \(a_{k}=f\left[x_{0}, x_{1}, \cdots, x_{k}\right]\) and \(f\left[x_{0}, x_{1}, \cdots, x_{n}\right]=\frac{f\left[x_{1}, x_{2}, \cdots, x_{n}\right]-f\left[x_{0}, x_{1}, \cdots, x_{n-1}\right]}{x_{n}-x_{0}}\). \(a_0 = f(x_0)\).
+	\end{namedthm*}
 	\section{Lecture 10: Cubic Spline Interpolation}
+
+	\begin{namedthm*}{How to find \(\mu_k \text{ and } \lambda_k\)}\(\mu_{k}=\frac{x_{k}-x_{k-1}}{x_{k+1}-x_{k-1}}, \quad \lambda_{k}=\frac{x_{k+1}-x_{k}}{x_{k+1}-x_{k-1}}, \quad k=1,2, \cdots, n-1\)
+	\end{namedthm*}
+
+	\begin{namedthm*}{Natural Boundary Conditions}\(M_0 = M_n = 0\).
+		\[
+			\begin{bmatrix}
+				2     & \lambda_1 &           &           &               \\
+				\mu_2 & 2         & \lambda_2 &           &               \\
+				      & \mu_3     & 2         & \ddots    &               \\
+				      &           & \ddots    & \ddots    & \lambda_{n-2} \\
+				      &           &           & \mu_{n-1} & 2
+			\end{bmatrix}
+			\begin{bmatrix}
+				M_1     \\
+				M_2     \\
+				M_3     \\
+				\vdots  \\
+				M_{n-2} \\
+				M_{n-1} \\
+			\end{bmatrix} =
+			\begin{bmatrix}
+				6f[x_0,x_1,x_2]             \\
+				6f[x_1,x_2,x_3]             \\
+				6f[x_2,x_3,x_4]             \\
+				\vdots                      \\
+				6f[x_{n-3},x_{n-2},x_{n-1}] \\
+				6f[x_{n-2},x_{n-1}, x_n]    \\
+			\end{bmatrix}
+		\]
+	\end{namedthm*}
+
+	\begin{namedthm*}{Clamped Boundary Conditions}\(2 M_{0}+M_{1}=6 f\left[x_{0}, x_{0}, x_{1}\right], \quad M_{n-1}+2 M_{n}=6 f\left[x_{n-1}, x_{n}, x_{n}\right]\).
+		\[
+			\begin{bmatrix}
+				2     & \lambda_0 &           &        &               \\
+				\mu_1 & 2         & \lambda_1 &        &               \\
+				      & \ddots    & \ddots    & \ddots &               \\
+				      &           & \mu_{n-1} & 2      & \lambda_{n-1} \\
+				      &           &           & \mu_n  & 2
+			\end{bmatrix}
+			\begin{bmatrix}
+				M_0     \\
+				M_1     \\
+				\vdots  \\
+				M_{n-1} \\
+				M_{n}
+			\end{bmatrix} =
+			\begin{bmatrix}
+				6f[x_0,x_0,x_1]           \\
+				6f[x_0,x_1,x_2]           \\
+				\vdots                    \\
+				6f[x_{n-2},x_{n-1},x_{n}] \\
+				6f[x_{n-1},x_{n}, x_n]
+			\end{bmatrix}
+		\]
+	\end{namedthm*}
+
+	\begin{namedthm*}{How to find \(S_k\)} \(S_{k}(x)=M_{k-1} \frac{\left(x-x_{k}\right)^{3}}{6\left(x_{k-1}-x_{k}\right)}+M_{k} \frac{\left(x-x_{k-1}\right)^{3}}{6\left(x_{k}-x_{k-1}\right)}+A_{k} x+B_{k}\). \(A_{k}=\frac{f\left(x_{k}\right)-f\left(x_{k-1}\right)}{x_{k}-x_{k-1}}-\frac{1}{6}\left(M_{k}-M_{k-1}\right)\left(x_{k}-x_{k-1}\right)\).\\ \(B_{k}=\frac{x_{k} f\left(x_{k-1}\right)-x_{k-1} f\left(x_{k}\right)}{x_{k}-x_{k-1}}+\frac{1}{6}\left(M_{k} x_{k-1}-M_{k-1} x_{k}\right)\left(x_{k}-x_{k-1}\right)\).
+	\end{namedthm*}
+
+    \begin{namedthm*}{Ascertaining number of points for error \(< \epsilon\)}
+        \color{red} TODO
+    \end{namedthm*}
 	\section{Tutorial 4: Divided diff and CSI}
 	\section{Lecture 11: Least Squares Approximation}
-	\section{Lecture 12: Newton-Cotes Formulae}
+	\begin{namedthm*}{Finding the coefficients}
+		Let \(X=\left(\begin{array}{ccccc}{1} & {x_{0}} & {x_{0}^{2}} & {\cdots} & {x_{0}^{n}} \\ {1} & {x_{1}} & {x_{1}^{2}} & {\cdots} & {x_{1}^{n}} \\ {\vdots} & {\vdots} & {\vdots} & {} & {\vdots} \\ {1} & {x_{m}} & {x_{m}^{2}} & {\cdots} & {x_{m}^{n}}\end{array}\right)\) and
+		\\ \(\mathbf{a}=\left(a_{0}, a_{1}, \cdots, a_{n}\right)^{T}, \quad \mathbf{y}=\left(y_{0}, y_{1}, \cdots, y_{m}\right)^{T}\). Solve \(X^TXa = X^Ty.\)
+	\end{namedthm*}
+
+	\begin{namedthm*}{Proof for Exercise 1}
+		\color{red} TODO
+    \end{namedthm*}
+    \begin{namedthm*}{Weighted LSA}
+        \(W=\operatorname{diag}\left\{w_{0}, w_{1}, \cdots, w_{n}\right\}\). Solve \(X^{T} W X \mathbf{a}=X^{T} W \mathbf{y}\).
+    \end{namedthm*}
+    \section{Lecture 12: Newton-Cotes Formulae}
+    \begin{namedthm*}{Linear Interpolation}
+        \(P(x)=f(a)\frac{x-b}{b-a}+f(b)\frac{x-a}{b-a}\).
+    \end{namedthm*}
+    \begin{namedthm*}{Error analysis for linear interpolation}
+        \color{red} TODO
+    \end{namedthm*} 
+    \begin{namedthm*}{Ascertaining number of points for error \(< \epsilon\)}
+        \color{red} TODO
+    \end{namedthm*}
+    \begin{namedthm*}{Trapezoidal Rule}\(\int_{a}^{b} f(x) \mathrm{d} x \approx \frac{b-a}{2}[f(a)+f(b)]\).
+    \end{namedthm*}
+    \begin{namedthm*}{Error for Trapezoidal Rule}\(\int_{a}^{b} f(x) \mathrm{d} x=\frac{b-a}{2}[f(a)+f(b)]-\frac{1}{12}(b-a)^{3} f^{\prime \prime}(\xi)\)
+    \end{namedthm*}
+    \begin{namedthm*}{Simpson's Rule} Assume that three data points \(f(a), f\left(\frac{a+b}{2}\right)\) and \(f(b)\) are given.Then \(P(x)=f(a)+\frac{f(b)-f(a)}{b-a}(x-a)+\left[2 f\left(\frac{a+b}{2}\right)-f(b)-f(a)\right] \frac{2(x-a)(x-b)}{(b-a)^{2}}\) whose integral is \(\left[\frac{2}{3} f\left(\frac{a+b}{2}\right)+\frac{1}{6} f(b)+\frac{1}{6} f(a)\right](b-a)\).
+    \end{namedthm*}
+    \begin{namedthm*}{Error for Simpson's Rule}\(\int_{a}^{b} f(x) \mathrm{d} x=\frac{b-a}{6}\left[f(a)+4 f\left(\frac{a+b}{2}\right)+f(b)\right]-\frac{1}{90}\left(\frac{b-a}{2}\right)^{5} f^{(4)}(\xi)\)
+    \end{namedthm*}
 	\section{Lecture 13: Composite Numerical Integration}
 	\section{Tutorial 5: LSA and Integration}
 	\section{Miscellaneous}
