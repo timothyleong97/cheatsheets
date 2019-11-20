@@ -209,13 +209,22 @@
 		\\\textbf{Solution.} \(S_{1}(x)=f\left(x_{0}\right) \frac{x-x_{1}}{x_{0}-x_{1}}+f\left(x_{1}\right) \frac{x-x_{0}}{x_{1}-x_{0}}\). \(S_{k}(x)=\frac{1}{2} M_{k} \frac{\left(x-x_{k-1}\right)^{2}}{x_{k}-x_{k-1}}+\frac{1}{2} M_{k-1} \frac{\left(x-x_{k}\right)^{2}}{x_{k-1}-x_{k}}+C_{k}, \quad k=2,3, \cdots, n.\)\\\(C_{k}=f\left(x_{k}\right)-\frac{1}{2} M_{k}\left(x_{k}-x_{k-1}\right)\). \(M_{k}=2 f\left[x_{k-1}, x_{k}\right]-M_{k-1}\). Since \(M_{1}=S_{1}^{\prime}\left(x_{1}\right)=f\left[x_{0}, x_{1}\right]\), \(M_{k}\) for \(k=2,3, \cdots, n\) can be obtained iteratively.
 	\end{namedthm*}
 	\section{Lecture 11: Least Squares Approximation}
+	\begin{namedthm*}{Proof of optimality}
+		Suppose a satisfies \(
+		X^{T} X \mathbf{a}=X^{T} \mathbf{y}.\) Then for any vector b with the same length as a, we have
+		\(
+		(X \mathbf{b}-\mathbf{y})^{T}(X \mathbf{b}-\mathbf{y}) \geqslant(X \mathbf{a}-\mathbf{y})^{T}(X \mathbf{a}-\mathbf{y})\). \textbf{Proof.}\[
+		\begin{aligned}&(X \mathbf{b}-\mathbf{y})^{T}(X \mathbf{b}-\mathbf{y})-(X \mathbf{a}-\mathbf{y})^{T}(X \mathbf{a}-\mathbf{y}) \\=& \mathbf{b}^{T} X^{T} X \mathbf{b}-2 \mathbf{b}^{T} X^{T} \mathbf{y}-\mathbf{a}^{T} X^{T} X \mathbf{a}+2 \mathbf{a}^{T} X^{T} \mathbf{y} \\=& \mathbf{b}^{T} X^{T} X \mathbf{b}-2 \mathbf{b}^{T} X^{T} X \mathbf{a}-\mathbf{a}^{T} X^{T} X \mathbf{a}+2 \mathbf{a}^{T} X^{T} X \mathbf{a} \\=& \mathbf{b}^{T} X^{T} X \mathbf{b}-2 \mathbf{b}^{T} X^{T} X \mathbf{a}+\mathbf{a}^{T} X^{T} X \mathbf{a}=(\mathbf{b}-\mathbf{a})^{T} X^{T} X(\mathbf{b}-\mathbf{a}) \geqslant 0 \end{aligned}
+		\]
+
+	\end{namedthm*}
 	\begin{namedthm*}{Finding the coefficients}
 		Let \(X=\left(\begin{array}{ccccc}{1} & {x_{0}} & {x_{0}^{2}} & {\cdots} & {x_{0}^{n}} \\ {1} & {x_{1}} & {x_{1}^{2}} & {\cdots} & {x_{1}^{n}} \\ {\vdots} & {\vdots} & {\vdots} & {} & {\vdots} \\ {1} & {x_{m}} & {x_{m}^{2}} & {\cdots} & {x_{m}^{n}}\end{array}\right)\) and
 		\\ \(\mathbf{a}=\left(a_{0}, a_{1}, \cdots, a_{n}\right)^{T}, \quad \mathbf{y}=\left(y_{0}, y_{1}, \cdots, y_{m}\right)^{T}\). Solve \(X^TXa = X^Ty.\)
 	\end{namedthm*}
 
-	\begin{namedthm*}{Proof for Exercise 1}
-		\color{red} TODO
+	\begin{namedthm*}{Lecture Exercise 1} Show that the least squares approximation is unique if and only if the matrix \(X\)
+		has full column rank, \(i.e.,\) the rank of \(X\) equals its number of columns. \textbf{Proof.} Note \(\operatorname{rank}(X^TX)=\operatorname{rank}(X)\). \((\implies)\)If the LSA is unique, the columns are linearly independent since we can write \(Xa\) as a unique linear combination of the columns of \(X\). Hence the rank of the matrix is equal to the number of columns.\((\impliedby)\) If \(Xa = b \text{ and } Xa' = b\) then \(X(a-a')=0\). Since X has full rank, \(Xc = 0\) iff \(c = 0 \implies a = a'\) (only the trivial solution to the homogeneous equation of linear combination of its columns exists).
 	\end{namedthm*}
 	\begin{namedthm*}{Weighted LSA}
 		\(W=\operatorname{diag}\left\{w_{0}, w_{1}, \cdots, w_{n}\right\}\). Solve \(X^{T} W X \mathbf{a}=X^{T} W \mathbf{y}\).
@@ -252,7 +261,8 @@
 		\color{red} TODO
 	\end{namedthm*}
 	\section{Tutorial 5: LSA and Integration}
-	\color{red} TODO \color{black}
+	\begin{namedthm*}{Figuring out the data points used in LSA} If the \(p(x)\) is given but the data points are incomplete, form the \(X^TXa=X^Ty\) system and select rows that look very similar to eliminate as many variables at once as possible.
+	\end{namedthm*}
 
 	\section{Miscellaneous}
 	\begin{namedthm*}{The Gamma function} \(\Gamma(x)=\int_{0}^{+\infty} t^{x-1} \mathrm{e}^{-t} \mathrm{d} t\) and \(\Gamma(n)=(n-1) !\) for any positive integer \(n\).
