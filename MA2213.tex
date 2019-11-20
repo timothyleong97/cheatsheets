@@ -2,6 +2,11 @@
 
 \documentclass[10pt,landscape]{article}
 \usepackage{amssymb,amsmath,amsthm,amsfonts,bm}
+\newenvironment{amatrix}[1]{%
+  \left(\begin{array}{@{}*{#1}{c}|c@{}}
+}{%
+  \end{array}\right)
+}
 \usepackage{multicol,multirow}
 \usepackage{calc}
 \usepackage{ifthen}
@@ -43,12 +48,12 @@
 
 % -----------------------------------------------------------------------
 
-\title{MA2213 Cheatsheet 19/20 Sem 1 Midterm}
+\title{MA2213 AY19/20 Semester 1 Finals}
 
 \begin{document}
 
 \begin{center}
-	{\large MA2213 Cheatsheet 19/20 Sem 1 Finals}
+	{\large MA2213 AY19/20 Semester 1 Finals}
 \end{center}
 
 \raggedright
@@ -62,7 +67,7 @@
 	\setlength{\columnsep}{2pt}
 
 	\section{Lecture 8: Lagrange Interpolation}
-	\begin{namedthm*}{Solving via linear system}
+	\begin{namedthm*}{Solving via linear system} \label{ge}
 		\[\begin{bmatrix}
 				1      & x_0    & x_0^2  & \cdots & x_0^n  \\
 				1      & x_1    & x_1^2  & \cdots & x_1^n  \\
@@ -96,14 +101,36 @@
 		\]
 	\end{namedthm*}
 	\section{Tutorial 3: Lagrange Interpolation}
+	\begin{namedthm*}{Example 1} Construct the LIP for \(f(x)=\log _{2} x\) using \(x_{0}=1 / 2, x_{1}=1, x_{2}=2, x_{3}=4 .\) Find a bound of the absolute error for any
+		\(x \in[1 / 2,+\infty) .\)
+		\\\textbf{Solution.} \(f\left(0.5\right)=-1, \quad f\left(1\right)=0, \quad f\left(2\right)=1, \quad f\left(4\right)=2\). Solve using linear system
+		to get \(a_0= -\frac{52}{21}\), \(a_1 = \frac{7}{2}\), \(a_2 =-\frac{7}{6}\), \(a_3=\frac{1}{7}\). So \(P(x)=\frac{1}{7} x^{3}-\frac{7}{6} x^{2}+\frac{7}{2} x-\frac{52}{21}\). To get an u.b for error, first find \(f^{(4)}(x)=-\frac{6}{x^{4} \ln 2}\). Note monotonicity. Hence \(\left|f^{(4)}(x)\right| \leqslant \frac{6}{(1 / 2)^{4} \ln 2}=\frac{96}{\ln 2}\). Thus an u.b for absolute error \(|P(x)-f(x)|\) is
+		\(
+		\frac{1}{4 !} \times \frac{96}{\ln 2}|(x-1 / 2)(x-1)(x-2)(x-4)|=\frac{4}{\ln 2}|(x-1 / 2)(x-1)(x-2)(x-4)|. \medspace \square
+		\).
+	\end{namedthm*}
+
+	\begin{namedthm*}{Result from Example 2}
+		If nodes are equidistributed, the maximum value of \(g(x)=\left|\left(x-x_{0}\right)\left(x-x_{1}\right) \cdots\left(x-x_{N}\right)\right|\) must be attained in \(\left(x_{0}, x_{1}\right)\) and \(\left(x_{N-1}, x_{N}\right)\) (due to the symmetry). \(\left|g\left(x^{*}\right)\right| \leqslant \frac{1}{4} N ! h^{N+1}\).
+	\end{namedthm*}
+	\begin{namedthm*}{Error estimation for equidistributed nodes}
+		\(\left|P_{N}(x)-f(x)\right| \leqslant \frac{h^{N+1}}{4(N+1)} \max_{\xi \in[a, b]}\left|f^{(N+1)}(\xi)\right|,\) for all \(x \in[a, b]\)
+	\end{namedthm*}
+
+	\begin{namedthm*}{Exercise 2} Let \(P_{n}(x)\) be the LIP for \(f(x)=\cos x\) with \(x_{k}=k h, \quad k=0,1,\cdots, n\) where \(h=\pi /(2 n)\). \textbf{1.} Find a positive integer \(N\) such that
+		\(
+		\left|P_{N}(x)-f(x)\right|<0.005, \quad \text { for all } x \in[0, \pi / 2].
+		\)
+		\textbf{Solution.} For \(f(x)=\cos(x)\), \(\max _{\xi \in[0, \pi / 2]}\left|f^{(N+1)}(\xi)\right|=1\). Hence it suffices to find \(\frac{h^{N+1}}{4(N+1)} < 0.005 \implies N \geq 3\).
+	\end{namedthm*}
 	\section{Lecture 9: Divided Differences}
-	\begin{namedthm*}{How to find Lagrange polynomial}
+	\begin{namedthm*}{How to find the Lagrange polynomial}
 		\(
 		P_{n}(x)=a_{0}+a_{1}\left(x-x_{0}\right)+a_{2}\left(x-x_{0}\right)\left(x-x_{1}\right)+\cdots+a_{n}\left(x-x_{0}\right)\left(x-x_{1}\right) \cdots\left(x-x_{n-1}\right)
 		\)
 		where \(a_{k}=f\left[x_{0}, x_{1}, \cdots, x_{k}\right]\) and \(f\left[x_{0}, x_{1}, \cdots, x_{n}\right]=\frac{f\left[x_{1}, x_{2}, \cdots, x_{n}\right]-f\left[x_{0}, x_{1}, \cdots, x_{n-1}\right]}{x_{n}-x_{0}}\). \(a_0 = f(x_0)\).
 	\end{namedthm*}
-	\section{Lecture 10: Cubic Spline Interpolation}
+	\section{Lecture 10: Cubic Spline Interpolation (CSI)}
 
 	\begin{namedthm*}{How to find \(\mu_k \text{ and } \lambda_k\)}\(\mu_{k}=\frac{x_{k}-x_{k-1}}{x_{k+1}-x_{k-1}}, \quad \lambda_{k}=\frac{x_{k+1}-x_{k}}{x_{k+1}-x_{k-1}}, \quad k=1,2, \cdots, n-1\)
 	\end{namedthm*}
@@ -164,11 +191,23 @@
 
 	\begin{namedthm*}{How to find \(S_k\)} \(S_{k}(x)=M_{k-1} \frac{\left(x-x_{k}\right)^{3}}{6\left(x_{k-1}-x_{k}\right)}+M_{k} \frac{\left(x-x_{k-1}\right)^{3}}{6\left(x_{k}-x_{k-1}\right)}+A_{k} x+B_{k}\). \(A_{k}=\frac{f\left(x_{k}\right)-f\left(x_{k-1}\right)}{x_{k}-x_{k-1}}-\frac{1}{6}\left(M_{k}-M_{k-1}\right)\left(x_{k}-x_{k-1}\right)\).\\ \(B_{k}=\frac{x_{k} f\left(x_{k-1}\right)-x_{k-1} f\left(x_{k}\right)}{x_{k}-x_{k-1}}+\frac{1}{6}\left(M_{k} x_{k-1}-M_{k-1} x_{k}\right)\left(x_{k}-x_{k-1}\right)\).
 	\end{namedthm*}
+	\begin{namedthm*}{Piecewise Linear Interpolation (PLI)} If \(S(x) = S_k(x), \quad \text {for } x\in [x_{k-1}, x_k], k = 1,2,\cdots, n\) then
+		\(S_k(x)=f(x_{k-1}) \frac{x-x_k}{x_k-x_{k-1}}+f(x_k) \frac{x-x_{k-1}}{x_k-x_{k-1}}\)
+	\end{namedthm*}
+	\begin{namedthm*}{Error analysis for PLI on equidistributed nodes}
+		If \(x_{k}=x_{0}+k h\), then for \(x \in [x_0,x_n]\), \(|f(x)-S(x)| \leq \frac{1}{8}h^2\max_{\xi \in [x_0,x_n]}|f''(\xi)|\)
+	\end{namedthm*}
 
-    \begin{namedthm*}{Ascertaining number of points for error \(< \epsilon\)}
-        \color{red} TODO
-    \end{namedthm*}
-	\section{Tutorial 4: Divided diff and CSI}
+
+	\section{Tutorial 4: Divided Diff and CSI}
+	\begin{namedthm*}{Example 2: Quadratic spline interpolation}
+		Given \(n+1\) nodes \(x_{0}<x_{1}<\cdots<x_{n-1}<x_{n}\) and a continuous function \(f(x),\)
+		find a function \(S(x)\) such that
+		\textbf{1.} \(S(x)\) is first-order differentiable on \(\left(x_{0}, x_{n}\right)\)
+		\textbf{2.} \(S(x)\) is a quadratic polynomial on \(\left(x_{k-1}, x_{k}\right)\) for any \(k=2,3, \cdots, n ;\)
+		\textbf{3.} \(\left.S(x) \text { is a linear function on (} x_{0}, x_{1}\right)\). \textbf{4.} \(S\left(x_{k}\right)=f\left(x_{k}\right)\) for all \(k=0,1, \cdots, n\).
+		\\\textbf{Solution.} \(S_{1}(x)=f\left(x_{0}\right) \frac{x-x_{1}}{x_{0}-x_{1}}+f\left(x_{1}\right) \frac{x-x_{0}}{x_{1}-x_{0}}\). \(S_{k}(x)=\frac{1}{2} M_{k} \frac{\left(x-x_{k-1}\right)^{2}}{x_{k}-x_{k-1}}+\frac{1}{2} M_{k-1} \frac{\left(x-x_{k}\right)^{2}}{x_{k-1}-x_{k}}+C_{k}, \quad k=2,3, \cdots, n.\)\\\(C_{k}=f\left(x_{k}\right)-\frac{1}{2} M_{k}\left(x_{k}-x_{k-1}\right)\). \(M_{k}=2 f\left[x_{k-1}, x_{k}\right]-M_{k-1}\). Since \(M_{1}=S_{1}^{\prime}\left(x_{1}\right)=f\left[x_{0}, x_{1}\right]\), \(M_{k}\) for \(k=2,3, \cdots, n\) can be obtained iteratively.
+	\end{namedthm*}
 	\section{Lecture 11: Least Squares Approximation}
 	\begin{namedthm*}{Finding the coefficients}
 		Let \(X=\left(\begin{array}{ccccc}{1} & {x_{0}} & {x_{0}^{2}} & {\cdots} & {x_{0}^{n}} \\ {1} & {x_{1}} & {x_{1}^{2}} & {\cdots} & {x_{1}^{n}} \\ {\vdots} & {\vdots} & {\vdots} & {} & {\vdots} \\ {1} & {x_{m}} & {x_{m}^{2}} & {\cdots} & {x_{m}^{n}}\end{array}\right)\) and
@@ -177,35 +216,59 @@
 
 	\begin{namedthm*}{Proof for Exercise 1}
 		\color{red} TODO
-    \end{namedthm*}
-    \begin{namedthm*}{Weighted LSA}
-        \(W=\operatorname{diag}\left\{w_{0}, w_{1}, \cdots, w_{n}\right\}\). Solve \(X^{T} W X \mathbf{a}=X^{T} W \mathbf{y}\).
-    \end{namedthm*}
-    \section{Lecture 12: Newton-Cotes Formulae}
-    \begin{namedthm*}{Linear Interpolation}
-        \(P(x)=f(a)\frac{x-b}{b-a}+f(b)\frac{x-a}{b-a}\).
-    \end{namedthm*}
-    \begin{namedthm*}{Error analysis for linear interpolation}
-        \color{red} TODO
-    \end{namedthm*} 
-    \begin{namedthm*}{Ascertaining number of points for error \(< \epsilon\)}
-        \color{red} TODO
-    \end{namedthm*}
-    \begin{namedthm*}{Trapezoidal Rule}\(\int_{a}^{b} f(x) \mathrm{d} x \approx \frac{b-a}{2}[f(a)+f(b)]\).
-    \end{namedthm*}
-    \begin{namedthm*}{Error for Trapezoidal Rule}\(\int_{a}^{b} f(x) \mathrm{d} x=\frac{b-a}{2}[f(a)+f(b)]-\frac{1}{12}(b-a)^{3} f^{\prime \prime}(\xi)\)
-    \end{namedthm*}
-    \begin{namedthm*}{Simpson's Rule} Assume that three data points \(f(a), f\left(\frac{a+b}{2}\right)\) and \(f(b)\) are given.Then \(P(x)=f(a)+\frac{f(b)-f(a)}{b-a}(x-a)+\left[2 f\left(\frac{a+b}{2}\right)-f(b)-f(a)\right] \frac{2(x-a)(x-b)}{(b-a)^{2}}\) whose integral is \(\left[\frac{2}{3} f\left(\frac{a+b}{2}\right)+\frac{1}{6} f(b)+\frac{1}{6} f(a)\right](b-a)\).
-    \end{namedthm*}
-    \begin{namedthm*}{Error for Simpson's Rule}\(\int_{a}^{b} f(x) \mathrm{d} x=\frac{b-a}{6}\left[f(a)+4 f\left(\frac{a+b}{2}\right)+f(b)\right]-\frac{1}{90}\left(\frac{b-a}{2}\right)^{5} f^{(4)}(\xi)\)
-    \end{namedthm*}
+	\end{namedthm*}
+	\begin{namedthm*}{Weighted LSA}
+		\(W=\operatorname{diag}\left\{w_{0}, w_{1}, \cdots, w_{n}\right\}\). Solve \(X^{T} W X \mathbf{a}=X^{T} W \mathbf{y}\).
+	\end{namedthm*}
+	\section{Lecture 12: Newton-Cotes Formulae}
+	\begin{namedthm*}{Ascertaining number of points for error \(< \epsilon\)}
+		\color{red} TODO
+	\end{namedthm*}
+	\begin{namedthm*}{Trapezoidal Rule}\(\int_{a}^{b} f(x) \mathrm{d} x \approx \frac{b-a}{2}[f(a)+f(b)]\).
+	\end{namedthm*}
+	\begin{namedthm*}{Error for Trapezoidal Rule}\(\int_{a}^{b} f(x) \mathrm{d} x=\frac{b-a}{2}[f(a)+f(b)]-\frac{1}{12}(b-a)^{3} f^{\prime \prime}(\xi)\)
+	\end{namedthm*}
+	\begin{namedthm*}{Simpson's Rule} Given \(f(a), f\left(\frac{a+b}{2}\right)\) and \(f(b)\), \(P(x)=f(a)+\frac{f(b)-f(a)}{b-a}(x-a)+\left[2 f\left(\frac{a+b}{2}\right)-f(b)-f(a)\right] \frac{2(x-a)(x-b)}{(b-a)^{2}}\) whose integral is \(\left[\frac{2}{3} f\left(\frac{a+b}{2}\right)+\frac{1}{6} f(b)+\frac{1}{6} f(a)\right](b-a)\).
+	\end{namedthm*}
+	\begin{namedthm*}{Error for Simpson's Rule}\(\int_{a}^{b} f(x) \mathrm{d} x=\frac{b-a}{6}\left[f(a)+4 f\left(\frac{a+b}{2}\right)+f(b)\right]-\frac{1}{90}\left(\frac{b-a}{2}\right)^{5} f^{(4)}(\xi)\)
+	\end{namedthm*}
+	\begin{namedthm*}{Theorem 3 on Page 4}
+		\color{red}TODO
+	\end{namedthm*}
+	\begin{namedthm*}{Gaussian Elimination to find weights}
+		\color{red}TODO
+	\end{namedthm*}
 	\section{Lecture 13: Composite Numerical Integration}
+	\begin{namedthm*}{Composite Trapezoidal Rule (CTR)}
+		\color{red} Confusing use of h. Read carefully first
+	\end{namedthm*}
+	\begin{namedthm*}{Error analysis for CTR}
+		\color{red} TODO
+	\end{namedthm*}
+	\begin{namedthm*}{Composite Simpson's Rule (CSR)}
+		\color{red} TODO
+	\end{namedthm*}
+	\begin{namedthm*}{Error analysis for CSR}
+		\color{red} TODO
+	\end{namedthm*}
 	\section{Tutorial 5: LSA and Integration}
+	\color{red} TODO \color{black}
+
 	\section{Miscellaneous}
 	\begin{namedthm*}{The Gamma function} \(\Gamma(x)=\int_{0}^{+\infty} t^{x-1} \mathrm{e}^{-t} \mathrm{d} t\) and \(\Gamma(n)=(n-1) !\) for any positive integer \(n\).
 	\end{namedthm*}
-
-
+	\begin{namedthm*}{Linear Algebra and Calculus}
+		\color{red} TODO
+	\end{namedthm*}
+	\begin{namedthm*}{General formulae for higher derivatives}
+		\hyperref{https://www.math24.net/higher-order-derivatives/}{}{}{Higher order derivatives}
+	\end{namedthm*}
+	\begin{namedthm*}{Error proofs from lectures/tutorials}
+		\color{red} LSA proof of optimality, the proof of errors, tutorial identities
+	\end{namedthm*}
+	\begin{namedthm*}{Finding the set of x and y values for the lowest error LIP}
+		First find the lowest-error polynomial (LEP), which is \(p(x)=a_{0}+a_{1} x+a_{2} x^{2}+\cdots+a_{m} x^{m}\). From Homework Q3, \(M=\left(\begin{array}{cccc}{b-a} & {\frac{b^{2}-a^{2}}{2}} & {\cdots} & {\frac{b^{m+1}-a^{m+1}}{m+1}} \\ {\frac{b^{2}-a^{2}}{2}} & {\frac{b^{3}-a^{3}}{3}} & {\cdots} & {\frac{b^{m+2}-a^{m+2}}{m+2}} \\ {\vdots} & {\vdots} & {} & {\vdots} \\ {\frac{b^{m+1}-a^{m+1}}{m+1}} & {\frac{b^{m+2}-a^{m+2}}{m+2}} & {\cdots} & {\frac{b^{2 m+1}-a^{2 m+1}}{2 m+1}}\end{array}\right)\) and b = \(\left(\int_{a}^{b} x^{0} f(x) d x, \cdots, \int_{a}^{b} x^{m} f(x) d x\right)^{T}\). Solve \(Ma = b\) to get the coefficients of the LEP. Then reverse-engineer the Gaussian Elimination process for finding \(a\) when constructing the LIP to get x and y (possibly non-unique).
+	\end{namedthm*}
 
 \end{multicols}
 \end{document}
