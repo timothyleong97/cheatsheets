@@ -303,9 +303,7 @@
 	\end{namedthm*}
 	\begin{namedthm*}{Linear Algebra and Calculus}
 		\(\frac{d}{dt}\int_{a(t)}^{b(t)}q(x)dx= q(b(t))b'(t)-q(a(t))a'(t)\).
-		\color{red}
-		See if I want to add LSA lemmas\dots
-		\color{black}
+		\(\operatorname{rank}(A B) \leqslant \operatorname{rank} A=\operatorname{rank} A^{T}=\operatorname{rank}\left(A^{T} A\right)\)
 	\end{namedthm*}
 	\begin{namedthm*}{Result from T3 Eg. 2}
 		For \(f(x)=1 / \sqrt{x}\),
@@ -314,31 +312,45 @@
 		\).
 	\end{namedthm*}
 	\begin{namedthm*}{Error proofs from lectures/tutorials}
-		\color{red} See if I want to add the lecture error proofs
-		\color{black}
+		\begin{namedthm*}{Proving Lagrange error} Define \(g(t)=f(t)-P_{n}(t)-\left[f(x)-P_{n}(x)\right] \frac{\left(t-x_{0}\right)\left(t-x_{1}\right) \cdots\left(t-x_{n}\right)}{\left(x-x_{0}\right)\left(x-x_{1}\right) \cdots\left(x-x_{n}\right)}\). \(g(x_k)=0\) so by repeated Rolle's theorem, there exists a t such that \(g^{(n+1)}(t)=f^{(n+1)}(t)-\frac{(n+1) !\left[f(x)-P_{n}(x)\right]}{\left(x-x_{0}\right)\left(x-x_{1}\right) \cdots\left(x-x_{n}\right)}= 0\). Make \(f(x)-P_n(x)\) the subject.
+
+		\end{namedthm*}
+		\begin{namedthm*}{Proving Trapezoidal Rule error}
+			Let \(\zeta=(a+b) / 2\) and \(h=(b-a) / 2 .\) Define
+			\[
+				g(t)=\int_{\zeta-t}^{\zeta+t} f(x) \mathrm{d} x-t[f(\zeta+t)+f(\zeta-t)], \quad r(t)=g(t)-\left(\frac{t}{h}\right)^{3} g(h).
+			\] Idea is to approximate h with t. Then \(g^{\prime}(t)=-t\left[f^{\prime}(\zeta+t)-f^{\prime}(\zeta-t)\right]\), \(r^{\prime}(t)=g^{\prime}(t)-\frac{3 t^{2}}{h^{3}} g(h)\) and \(g(0)=r(0)=r(h)=0\). Clearly \(r(t)\) is differentiable. By Rolle's theorem, we can find \(t_{0} \in(0, h)\) such that \(r^{\prime}\left(t_{0}\right)=0\),
+			\(\begin{array}{ll}{\text { i.e. }} & {\frac{3 t_{0}^{2}}{h^{3}} g(h)=g^{\prime}\left(t_{0}\right)=-t_{0}\left[f^{\prime}\left(\zeta+t_{0}\right)-f^{\prime}\left(\zeta-t_{0}\right)\right]}\end{array}\). By the mean value theorem, we can find \(\xi \in\left(\zeta-t_{0}, \zeta+t_{0}\right)\) such that
+			\(			f^{\prime}\left(\zeta+t_{0}\right)-f^{\prime}\left(\zeta-t_{0}\right)=2 t_{0} f^{\prime \prime}(\xi)
+			\). Rearrange.
+		\end{namedthm*}
+
+		\begin{namedthm*}{Estimating the cubic spline interpolation error}
+			\(\max _{x \in\left[x_{i-1}, x_{i}\right]}\left|f(x)-p_{3}(x)\right| \leq \frac{(h)^{4}}{4 !} \max _{x \in[a, b]}\left|f^{(4)}(x)\right|\). h refers to the max distance between any two points. This estimation comes from the Lagrange error.
+		\end{namedthm*}
 
 		\begin{namedthm*}{Tut 4 Eg. 1}
 			Suppose \(f(x)\) is nth order differentiable and \(x_{0}, x_{1}, \cdots, x_{n}\) are \(n+1\) distinct real
 			numbers. Show that there exists \(\xi\) between min \(\left\{x_{0}, x_{1}, \cdots, x_{n}\right\}\) and max \(\left\{x_{0}, x_{1}, \cdots, x_{n}\right\}\) such
 			that
 			\(
-				f\left[x_{0}, x_{1}, \cdots, x_{n}\right]=\frac{f^{(n)}(\xi)}{n !}.
+			f\left[x_{0}, x_{1}, \cdots, x_{n}\right]=\frac{f^{(n)}(\xi)}{n !}.
 			\). \textbf{Solution.} Since the divided difference is independent of the order of its parameters, we can
 			assume that \(x_{0}<x_{1}<\cdots<x_{n} .\) Let \(P_{n}(x)\) be the Lagrange interpolating polynomial of \(f(x)\)
 			with nodes \(x_{0}, x_{1}, \cdots, x_{n} .\) Then \(\begin{aligned} P_{n}(x)=& f\left[x_{0}\right]+f\left[x_{0}, x_{1}\right]\left(x-x_{0}\right)+f\left[x_{0}, x_{1}, x_{2}\right]\left(x-x_{0}\right)\left(x-x_{1}\right) \\ &+\cdots+f\left[x_{0}, x_{1}, x_{2}, \cdots, x_{n}\right]\left(x-x_{0}\right)\left(x-x_{1}\right) \cdots\left(x-x_{n-1}\right) \end{aligned}\). The \(n\) th derivative of \(P_{n}(x)\) is
-				\(
-				P_{n}^{(n)}(x)=n ! f\left[x_{0}, x_{1}, x_{2}, \cdots, x_{n}\right]
-				\). Now we define
-				\(
-				g(x)=f(x)-P_{n}(x). 
-				\) By the definition of interpolation, we know that
-				\(
-				g\left(x_{0}\right)=g\left(x_{1}\right)=\cdots=g\left(x_{n}\right)=0
-				\). By Rolle's theorem, there exists \(\xi \in\left(x_{0}, x_{n}\right)\) such that \(g^{(n)}(\xi)=0 .\) since
-				\(
-				g^{(n)}(\xi)=f^{(n)}(\xi)-P_{n}^{(n)}(\xi)=f^{(n)}(\xi)-n ! f\left[x_{0}, x_{1}, \cdots, x_{n}\right]
-				\)
-				we prove the claim by equating the above equation to zero.
+			\(
+			P_{n}^{(n)}(x)=n ! f\left[x_{0}, x_{1}, x_{2}, \cdots, x_{n}\right]
+			\). Now we define
+			\(
+			g(x)=f(x)-P_{n}(x).
+			\) By the definition of interpolation, we know that
+			\(
+			g\left(x_{0}\right)=g\left(x_{1}\right)=\cdots=g\left(x_{n}\right)=0
+			\). By Rolle's theorem, there exists \(\xi \in\left(x_{0}, x_{n}\right)\) such that \(g^{(n)}(\xi)=0 .\) since
+			\(
+			g^{(n)}(\xi)=f^{(n)}(\xi)-P_{n}^{(n)}(\xi)=f^{(n)}(\xi)-n ! f\left[x_{0}, x_{1}, \cdots, x_{n}\right]
+			\)
+			we prove the claim by equating the above equation to zero.
 		\end{namedthm*}
 		\begin{namedthm*}{Tut 5 Eg. 1}
 			Show that when \(f\) is second-order differentiable on \([a, b],\) there exists \(\xi \in(a, b)\)
@@ -366,6 +378,8 @@
 	\begin{namedthm*}{Finding the set of x and y values for the lowest error LIP}
 		First find the lowest-error polynomial (LEP), which is \(p(x)=a_{0}+a_{1} x+a_{2} x^{2}+\cdots+a_{m} x^{m}\). From Homework Q3, \(M=\left(\begin{array}{cccc}{b-a} & {\frac{b^{2}-a^{2}}{2}} & {\cdots} & {\frac{b^{m+1}-a^{m+1}}{m+1}} \\ {\frac{b^{2}-a^{2}}{2}} & {\frac{b^{3}-a^{3}}{3}} & {\cdots} & {\frac{b^{m+2}-a^{m+2}}{m+2}} \\ {\vdots} & {\vdots} & {} & {\vdots} \\ {\frac{b^{m+1}-a^{m+1}}{m+1}} & {\frac{b^{m+2}-a^{m+2}}{m+2}} & {\cdots} & {\frac{b^{2 m+1}-a^{2 m+1}}{2 m+1}}\end{array}\right)\) and b = \(\left(\int_{a}^{b} x^{0} f(x) d x, \cdots, \int_{a}^{b} x^{m} f(x) d x\right)^{T}\). Solve \(Ma = b\) to get the coefficients of the LEP. Then reverse-engineer the Gaussian Elimination process for finding \(a\) when constructing the LIP to get x and y (possibly non-unique).
 	\end{namedthm*}
-
+	\begin{namedthm*}{Determinant of Vandermonde matrix}
+		\(\operatorname{det} X=\prod_{i=1}^{n-1} \prod_{j=i+1}^{n}\left(x_{j}-x_{i}\right)\)
+	\end{namedthm*}
 \end{multicols}
 \end{document}
