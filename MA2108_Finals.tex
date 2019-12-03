@@ -1,0 +1,702 @@
+% Credits to Ning Yuan for the format
+
+\documentclass[10pt,landscape]{article}
+\usepackage{amssymb,amsmath,amsthm,amsfonts,bm}
+\usepackage{multicol,multirow}
+\usepackage{calc}
+\usepackage{ifthen}
+\usepackage[landscape]{geometry}
+\usepackage[colorlinks=true,citecolor=blue,linkcolor=blue]{hyperref}
+\usepackage{graphicx}
+\graphicspath{ {./images/} }
+\ifthenelse{\lengthtest { \paperwidth = 11in}}
+    { \geometry{top=.2in,left=.2in,right=.2in,bottom=.2in} }
+	{\ifthenelse{ \lengthtest{ \paperwidth = 297mm}}
+		{\geometry{top=1cm,left=1cm,right=1cm,bottom=1cm} }
+		{\geometry{top=1cm,left=1cm,right=1cm,bottom=1cm} }
+	}
+\pagestyle{empty}
+\makeatletter
+\renewcommand{\section}{\@startsection{section}{1}{0mm}%
+                                {-1ex plus -.5ex minus -.2ex}%
+                                {0.5ex plus .2ex}%x
+                                {\normalfont\large\bfseries}}
+\renewcommand{\subsection}{\@startsection{subsection}{2}{0mm}%
+                                {-1explus -.5ex minus -.2ex}%
+                                {0.5ex plus .2ex}%
+                                {\normalfont\normalsize\bfseries}}
+\renewcommand{\subsubsection}{\@startsection{subsubsection}{3}{0mm}%
+                                {-1ex plus -.5ex minus -.2ex}%
+                                {1ex plus .2ex}%
+                                {\normalfont\small\bfseries}}
+\makeatother
+\setcounter{secnumdepth}{0}
+\setlength{\parindent}{0pt}
+\setlength{\parskip}{0pt plus 0.5ex}
+
+\newcommand{\matr}[1]{\bm{#1}}
+\newcommand{\vect}[1]{\bm{#1}}
+\newcommand{\adj}{\operatorname{\textbf{adj}}}
+\newcommand{\lspan}{\operatorname{span}}
+\newcommand{\rank}{\operatorname{rank}}
+\newcommand{\nullity}{\operatorname{nullity}}
+\newcommand{\Ker}{\operatorname{Ker}}
+\newcommand{\norm}[1]{\left\lVert#1\right\rVert}
+
+\theoremstyle{definition}
+\newcommand{\thistheoremname}{}
+\newtheorem*{genericthm*}{\thistheoremname}
+\newenvironment{namedthm*}[1]
+{\renewcommand{\thistheoremname}{#1}\begin{genericthm*}}
+{\end{genericthm*}}
+
+% -----------------------------------------------------------------------
+
+\title{MA2108 Cheatsheet 19/20 Sem 1 Finals}
+
+\begin{document}
+
+\begin{center}
+	{\large MA2108 Cheatsheet 19/20 Sem 1 Finals}
+\end{center}
+
+\raggedright
+\footnotesize
+
+\begin{multicols}{3}
+
+	\setlength{\premulticols}{1pt}
+	\setlength{\postmulticols}{1pt}
+	\setlength{\multicolsep}{1pt}
+	\setlength{\columnsep}{2pt}
+
+	% \section{The Real Numbers}
+
+	\begin{namedthm*}{Result 1}
+		\(2^{n-1} \leq n!~ \text{and} ~ n < 2^{n}~\forall n \in \mathbb{N}\)
+	\end{namedthm*}
+
+	\begin{namedthm*}{Result 2}
+		\(n^{2} \leq 2^{n}~\forall n \in \mathbb{N} \backslash \{2,3,4\}\)
+	\end{namedthm*}
+
+	\begin{namedthm*}{Well-ordering principle}
+		Every nonempty subset \(A\) of \(\mathbb{N}\) has \(a\) least (first) element,
+		i.e. there exists \(p \in A\) such that \(p \leq a\) for all \(a \in A\)
+	\end{namedthm*}
+
+	\begin{namedthm*}{Lemma 1.5.1}
+		~
+		\begin{enumerate}
+			\item If \(c > 1\), then \(c^{n} > c\) for every natural number \(n \geq 2\).
+			\item If \(0 < c < 1\), then \(c^{n} < c\) for every natural number \(n \geq 2\).
+		\end{enumerate}
+	\end{namedthm*}
+
+	\begin{namedthm*}{Theorem 1.5.3}
+		If \(a \in \mathbb{R}\) is such that \(0 \leq a< \varepsilon\) for every positive number \(\varepsilon,\) then \(a=0\)
+	\end{namedthm*}
+
+	\begin{namedthm*}{Bernoulli's Inequality}
+		If \(x>-1,\) then
+		$
+			(1+x)^{n} \geq 1+n x, \quad \forall n \in \mathbb{N}
+		$
+	\end{namedthm*}
+
+	\begin{namedthm*}{Harmonic mean}
+		The \textit{harmonic mean} of \(a_{1},a_{2},\cdots,a_{n}\) is defined as \(H=\frac{n}{\frac{1}{a_1} + \frac{1}{a_2} + \cdots + \frac{1}{a_n}}\).
+	\end{namedthm*}
+
+
+	\begin{namedthm*}{The AM-GM-HM Inequality}
+		\(H \leq G \leq A .\)
+		Equality holds if and only if \(a_{1}=a_{2}=\cdots=a_{n} .\)
+	\end{namedthm*}
+
+
+	\begin{namedthm*}{Triangle Inequality}
+		For \(a, b \in \mathbb{R},|a+b| \leq|a|+|b|\)
+	\end{namedthm*}
+
+	\begin{namedthm*}{Corollary 1.8.2}
+		$$| | a|-| b| | \leq|a-b|$$
+		$$|a-b| \leq|a|+|b|$$
+	\end{namedthm*}
+
+
+
+	\begin{namedthm*}{Lemma 1.9.1}
+		Let u be an upper bound of \(S \subseteq \mathbb{R}\) . Then \(u=\sup S\) if and only if \(\forall \varepsilon>0,\)
+		\(\exists x_{\varepsilon} \in S\) such that \(u-\varepsilon<x_{\varepsilon}\) . (The infimum version of this statement was proven in Homework 2)
+	\end{namedthm*}
+
+	\begin{namedthm*}{Supremum property of \(\mathbb{R}\)}
+		Every nonempty subset of \(\mathbb{R}\) which is bounded above has a supremum.
+	\end{namedthm*}
+
+	\begin{namedthm*}{Archimedean Property}
+		If \(x \in \mathbb{R},\) then \(\exists n_{x} \in \mathbb{N}\) such that \(x<n_{x}\)
+	\end{namedthm*}
+
+	\begin{namedthm*}{Corollary 1.9.2}
+		For any \(\varepsilon>0, \exists n \in \mathbb{N}\) such that
+		$
+			\frac{1}{n}<\varepsilon
+		$
+	\end{namedthm*}
+
+	\begin{namedthm*}{Corollary 1.9.3}
+		If \(x>0,\) then \(\exists n \in \mathbb{N}\) such that
+		$
+			n-1 \leq x<n
+		$
+	\end{namedthm*}
+	\begin{namedthm*}{Theorem 1.11.1}
+		Let \(a>0\) and \(n \in \mathbb{N}\) . There exists a unique positive real number \(u\) with
+		$
+			u^{n}=a \text { . }
+		$
+		We call the number u the positive nth root of a and write \(u=\sqrt[n]{a}\) or \(a^{1 / n}\) .
+	\end{namedthm*}
+
+	\begin{namedthm*}{Result}
+		If \(a>0\) and \(n, m \in \mathbb{N},\) then
+		$$
+			\left(a^{1 / n}\right)^{m}=\left(a^{m}\right)^{1 / n}
+		$$
+	\end{namedthm*}
+
+	\begin{namedthm*}{Density Theorem of \(\mathbb{Q}\)}
+		If \(a, b \in \mathbb{R}\) is such that \(a<b\), then there exists \(r \in \mathbb{Q}\) such that
+		\(a<r<b .\)
+	\end{namedthm*}
+
+	\begin{namedthm*}{Corollary 1.12.1}
+		If \(a, b \in \mathbb{R}\) is such that \(a<b,\) then there exists an irrational number \(x\)
+		such that \(a<x<b .\)
+	\end{namedthm*}
+
+	\begin{namedthm*}{Corollary 1.12.2}
+		Every interval \(I \subseteq \mathbb{R}\) contains infinitely many rational numbers and infinitely many irrational numbers.
+	\end{namedthm*}
+
+	% \section{Sequences}
+
+	\begin{namedthm*}{Theorem 2.1.1}
+		If \(\left(x_{n}\right)\) converges, then it has exactly one limit.
+	\end{namedthm*}
+
+	\begin{namedthm*}{Theorem 2.2.1}
+		Every convergent sequence is bounded.
+	\end{namedthm*}
+
+	\begin{namedthm*}{Theorem 2.2.2}If \(\lim _{n \rightarrow \infty} x_{n}=x\) and \(\lim _{n \rightarrow \infty} y_{n}=y,\) then
+		~
+		\begin{enumerate}
+			\item \(\lim _{n \rightarrow \infty}\left(x_{n}+y_{n}\right)=x+y\)
+			\item \(\lim _{n \rightarrow \infty}\left(x_{n}-y_{n}\right)=x-y\)
+			\item \(\lim _{n \rightarrow \infty}\left(x_{n} y_{n}\right)=x y\)
+			\item \(\lim _{n \rightarrow \infty}\left(\frac{x_{n}}{y_{n}}\right)=\frac{x}{y},\) provided \(y_{n} \neq 0, \forall n \in \mathbb{N},\) and \(y \neq 0\)
+		\end{enumerate}
+	\end{namedthm*}
+
+	\begin{namedthm*}{Corollary 2.2.3}
+		If \(\left(x_{n}\right)\) converges and \(k \in \mathbb{N},\) then
+		$$
+			\lim _{n \rightarrow \infty} x_{n}^{k}=\left(\lim _{n \rightarrow \infty} x_{n}\right)^{k}
+		$$
+	\end{namedthm*}
+
+	\begin{namedthm*}{Classic limit}
+		\(\lim _{n \rightarrow \infty} \frac{\sin n}{n}=0\)
+	\end{namedthm*}
+
+	\begin{namedthm*}{Theorem 2.2.4}
+		If \(|x_{n}| \rightarrow 0\), then \(x_{n} \rightarrow 0.\)
+	\end{namedthm*}
+	\begin{namedthm*}{Theorem 2.2.5}
+		If \(0 < b < 1\), then \(\lim _{n \rightarrow \infty} b^{n}=0\)
+	\end{namedthm*}
+
+	\begin{namedthm*}{Remark on Theorem 2.2.4 and 2.2.5}
+		Theorems 2.2.4 and 2.2.5 together imply that \(b^n \rightarrow 0\) for all \(b\) with \(|b| < 1\)
+	\end{namedthm*}
+
+
+	\begin{namedthm*}{Theorem 2.2.6}
+		If \(c > 0\), then \(\lim_{n \rightarrow \infty}c^{\frac{1}{n}}=1\)
+	\end{namedthm*}
+
+	\begin{namedthm*}{Theorem 2.2.7}
+		~
+		\begin{enumerate}
+			\item If \(\lim_{n \rightarrow \infty}{x_{n}} = x\), then \(\lim_{n \rightarrow \infty}{|x_{n}|} = |x|\)
+			\item If all \(x_{n} \geq 0\) and \(\lim_{n \rightarrow \infty}{x_{n}} = x\), then \(\lim_{n \rightarrow \infty}{\sqrt{x_{n}}} = \sqrt{x}\)
+		\end{enumerate}
+	\end{namedthm*}
+
+	\begin{namedthm*}{Theorem 2.2.8}
+		\(\lim_{n \rightarrow \infty}{n^{\frac{1}{n}}}=1\)
+	\end{namedthm*}
+
+
+	\begin{namedthm*}{Theorem 2.2.9}
+		~
+		\begin{enumerate}
+			\item If \(x_{n} \geq 0\) for all \(n \in \mathbb{N}\) and \((x_n)\) converges, then \(\lim_{n \rightarrow \infty}{x_{n}} \geq 0\)
+			\item If \((x_{n})\) and \((y_{n})\) are convergent and \(x_{n} \geq y_{n}\) for all \(n \in \mathbb{N}\), then \(\lim_{n \rightarrow \infty}{x_{n}} \geq \lim_{n \rightarrow \infty}{y_{n}}\)
+			\item If \(a,b \in \mathbb{R}\) and \(a \leq x_{n} \leq b\) for all n and \((x_n)\) is convergent, then \( a \leq \lim_{n \rightarrow \infty}{x_{n}} \leq b\)
+		\end{enumerate}
+	\end{namedthm*}
+
+	\begin{namedthm*}{Monotone Convergence Theorem}
+		If \(\left(x_{n}\right)\) is monotone and bounded, then it converges. \(\lim _{n \rightarrow \infty} x_{n}=\left\{\begin{array}{ll}{\sup \left\{x_{n}: n \in \mathbb{N}\right\}} & {\text { if } x_{n} \uparrow} \\ {\inf \left\{x_{n}: n \in \mathbb{N}\right\}} & {\text { if } x_{n} \downarrow}\end{array}\right.\)
+	\end{namedthm*}
+
+	\begin{namedthm*}{Nested Interval Theorem}
+		Let \(I_{n}=\left[a_{n}, b_{n}\right], n \in \mathbb{N}\) be a nested sequence of closed bounded intervals, that is, \(I_{n} \supseteq I_{n+1}\)
+		for \(n \in \mathbb{N} .\) Then the intersection \(\bigcap_{n=1}^{\infty} I_{n}=\left\{x: x \in I_{n} \forall n \in \mathbb{N}\right\}\) is nonempty. In addition, if length of \(I_{n}=b_{n}-a_{n} \rightarrow 0\) then\(\bigcap_{n=1}^{\infty} I_{n}\) contains exactly one point.
+	\end{namedthm*}
+
+	\begin{namedthm*}{Theorem 2.4.1}
+		If \(\left(x_{n}\right)\) converges to \(x,\) then any subsequence \(\left(x_{n_{k}}\right)\) also converges to \(x\).
+	\end{namedthm*}
+
+	\begin{namedthm*}{Corollary 2.4.2}
+		If \(\left(x_{n}\right)\) has a subsequence which is divergent, then \(\left(x_{n}\right)\) diverges.
+	\end{namedthm*}
+
+	\begin{namedthm*}{Corollary 2.4.3}
+		If \(\left(x_{n}\right)\) has two convergent subsequences whose limits are not equal, then
+		\(\left(x_{n}\right)\) diverges.
+	\end{namedthm*}
+
+	\begin{namedthm*}{Monotone Subsequence Theorem}
+		Every sequence has a monotone subsequence.
+	\end{namedthm*}
+
+	\begin{namedthm*}{Bolzano-Weierstrass Theorem}
+		Every bounded sequence has a convergent subsequence.
+	\end{namedthm*}
+
+	\begin{namedthm*}{Lemma 2.5.1}
+		Let \(x \in \mathbb{R} .\) Then there exists an increasing rational sequence \(\left(r_{n}\right)\) which con-
+		verges to \(x .\)
+	\end{namedthm*}
+
+	\begin{namedthm*}{Theorem 2.5.3}
+		If \(a \geq 1\) and \(\left(r_{n}\right)\) is a decreasing rational sequence with limit \(x,\) then
+		\(
+		\lim _{n \rightarrow \infty} a^{r_{n}}=a^{x} \text { . }
+		\)
+	\end{namedthm*}
+
+	\begin{namedthm*}{Theorem 2.5.4 (Properties of exponents)}
+		~
+		\begin{enumerate}
+			\item \(a^{x+y}=a^{x} a^{y}\)
+			\item \(\left(a^{x}\right)^{y}=a^{x y}\)
+			\item If \(a>1\) and \(x<y,\) then \(a^{x}<a^{y}\)
+		\end{enumerate}
+	\end{namedthm*}
+
+	\begin{namedthm*}{Theorem 2.6.1}
+		Let \(\left(x_{n}\right)\) be a bounded sequence and let \(M=\limsup x_{n}\).
+		\begin{enumerate}
+			\item For each \(\varepsilon>0,\) there are at most finitely many \(n^{\prime}\) such that \(x_{n} \geq M+\varepsilon .\) Equivalently, there exists \(K \in \mathbb{N}\) such that \(n \geq K \Longrightarrow x_{n}<M+\varepsilon\).
+			\item For each \(\varepsilon>0,\) there are infinitely many \(n^{\prime} s\) such that \(x_{n}>M-\varepsilon\).
+		\end{enumerate}
+	\end{namedthm*}
+
+	\begin{namedthm*}{Theorem 2.6.2}
+		Let \(\left(x_{n}\right)\) be a bounded sequence and let \(m=\liminf x_{n}\).
+		\begin{enumerate}
+			\item For each \(\varepsilon>0,\) there are at most only finitely many \(n\) 's such that \(x_{n} \leq m-\varepsilon .\) Equivalently, there exists \(K \in \mathbb{N}\) such that \(n \geq K \Longrightarrow x_{n}>m-\varepsilon\).
+			\item For each \(\varepsilon>0,\) there are infinitely many \(n^{\prime}\) s such that \(x_{n}<m+\varepsilon .\)
+		\end{enumerate}
+	\end{namedthm*}
+
+	\begin{namedthm*}{Theorem 2.6.3}
+		Let \(\left(x_{n}\right)\) be a bounded sequence. Then \(\left(x_{n}\right)\) converges if and only if
+		\(
+		\lim \sup x_{n}=\lim \inf x_{n}
+		\).
+	\end{namedthm*}
+
+
+	\begin{namedthm*}{Theorem 2.6.4}
+		Let \(\left(x_{n}\right)\) and \(\left(y_{n}\right)\) be bounded sequence such that \(x_{n} \leq y_{n}\) for every \(n \in \mathbb{N}\). Then \(\limsup x_{n} \leq \lim \sup y_{n}\) and \(\liminf x_{n} \leq \liminf y_{n}\).
+	\end{namedthm*}
+
+	\begin{namedthm*}{Definition of a Cauchy sequence}
+		A sequence \(\left(x_{n}\right)\) is called a Cauchy sequence if for every \(\varepsilon>0,\) there exists \(K \in \mathbb{N}\) such that \(\left|x_{n}-x_{m}\right|<\varepsilon, \quad \forall n, m \geq K\).
+	\end{namedthm*}
+
+	\begin{namedthm*}{Theorem 2.7.1}
+		Every convergent sequence is Cauchy.
+	\end{namedthm*}
+
+	\begin{namedthm*}{Cauchy criterion}
+		Every Cauchy sequence is convergent (and thus bounded).
+	\end{namedthm*}
+
+	\begin{namedthm*}{Contractive sequences}
+		A sequence \(\left(x_{n}\right)\) is said to be contractive if \(\exists C\) with \(0<C<1\) such that \(\left|x_{n+2}-x_{n+1}\right| \leq C\left|x_{n+1}-x_{n}\right|, \quad \forall n \in \mathbb{N}\).
+	\end{namedthm*}
+
+	\begin{namedthm*}{Theorem 2.7.3}
+		Every contractive sequence is Cauchy (and so is convergent).
+	\end{namedthm*}
+
+	\begin{namedthm*}{Partial fraction}
+		\(\frac{1}{k(k+1)}=\frac{1}{k}-\frac{1}{k+1}\)
+	\end{namedthm*}
+
+	\begin{namedthm*}{Theorem 3.1.1}
+		If the series \(\sum_{n=1}^{\infty} a_{n}\) and \(\sum_{n=1}^{\infty} b_{n}\) are convergent, then the series \(\sum_{n=1}^{\infty}\left(a_{n}+b_{n}\right)=\sum_{n=1}^{\infty} a_{n}+\sum_{n=1}^{\infty} b_{n}\), and \(\sum_{n=1}^{\infty} c a_{n}=c \sum_{n=1}^{\infty} a_{n}\).
+	\end{namedthm*}
+
+	\begin{namedthm*}{Theorem 3.1.2}
+		If \(\sum_{n=1}^{\infty} a_{n}\) converges, then \(\lim _{n \rightarrow \infty} a_{n}=0\).
+	\end{namedthm*}
+
+	\begin{namedthm*}{The n-th term divergence test}
+		If \(\lim _{n \rightarrow \infty} a_{n} \neq 0,\) then \(\sum_{n=1}^{\infty} a_{n}\) diverges.
+	\end{namedthm*}
+
+	\begin{namedthm*}{Cauchy criterion for series}
+		The series \(\sum_{n=1}^{\infty} a_{n}\) converges if and only iffor every \(\varepsilon>0,\) there exists \(K \in \mathbb{N}\) such that \(\left|a_{n+1}+a_{n+2}+\cdots+a_{m}\right|<\varepsilon, \quad \forall m>n \geq K\).
+	\end{namedthm*}
+
+	\begin{namedthm*}{Theorem 3.2.1}
+		If \(a_{n} \geq 0\) for all \(n,\) then the series \(\sum_{n=1}^{\infty} a_{n}\) converges if and only if the sequence \(\left(s_{n}\right)\) of partial sums is bounded.
+	\end{namedthm*}
+
+	\begin{namedthm*}{Theorem 3.2.2}
+		If \(p>1,\) then the \(p\) -series \(\sum_{n=1}^{\infty} \frac{1}{n^{p}}\) converges.
+	\end{namedthm*}
+
+	\begin{namedthm*}{Theorem 3.2.3}
+		If \(0<p \leq 1,\) then the p-series \(\sum_{n=1}^{\infty} \frac{1}{n^{p}}\) diverges.
+	\end{namedthm*}
+
+	\begin{namedthm*}{Comparison Test}
+		Suppose that \(0 \leq a_n \leq b_n, \quad \forall n \geq K\) for some \(K \in \mathbb{N}\). Then \(\sum_{n=1}^{\infty} b_{n}\) converges \(\Longrightarrow \sum_{n=1}^{\infty} a_{n}\) converges. \(\sum_{n=1}^{\infty} a_{n}\) diverges \(\Longrightarrow \sum_{n=1}^{\infty} b_{n}\) diverges.
+	\end{namedthm*}
+
+
+	\begin{namedthm*}{Limit Comparison Test}
+		Let \(\sum_{n=1}^{\infty} a_{n}\) and \(\sum_{n=1}^{\infty} b_{n}\) be series with positive terms. Suppose \(\rho=\lim _{n \rightarrow \infty} \frac{a_{n}}{b_{n}}\) exists. If \(\rho>0,\) then either the two series both converge or both diverge. If \(\rho=0\) and \(\sum_{n=1}^{\infty} b_{n}\) converges, then \(\sum_{n=1}^{\infty} a_{n}\) converges.
+	\end{namedthm*}
+
+	\begin{namedthm*}{Alternating Series Test}
+		If \(\left(a_{n}\right)\) is a decreasing sequence such that \(a_{n}>0\) for all \(n\) and \(\lim _{n \rightarrow \infty} a_{n}=0,\) then the alternating series \(\sum_{n=1}^{\infty}(-1)^{n+1} a_{n}\) converges.
+	\end{namedthm*}
+
+	\begin{namedthm*}{Theorem 3.4.1}
+		If the series \(\sum_{n=1}^{\infty} a_{n}\) converges absolutely, then it converges.
+	\end{namedthm*}
+
+	\begin{namedthm*}{Ratio Test}
+		Suppose that all the terms of the series \(\sum_{n=1}^{\infty} a_{n}\) are nonzero and the limit \(\rho=\lim _{n \rightarrow \infty}\left|\frac{a_{n+1}}{a_{n}}\right|\) exists. If \(\rho<1,\) then the series \(\sum_{n=1}^{\infty} a_{n}\) converges absolutely. If \(\rho>1,\) then the series \(\sum_{n=1}^{\infty} a_{n}\) diverges. No conclusion if \(\rho=1\).
+	\end{namedthm*}
+	\begin{namedthm*}{Ross pg. 79}
+		\(\liminf \left|\frac{s_{n+1}}{s_{n}}\right| \leq \liminf \left|s_{n}\right|^{1 / n} \leq \limsup \left|s_{n}\right|^{1 / n} \leq \limsup \left|\frac{s_{n+1}}{s_{n}}\right|\). \textbf{Proof.} Let \(\alpha=\limsup \left|s_{n}\right|^{1 / n}\) and \(L=\limsup \left|\frac{s_{n+1}}{s_{n}}\right|\). It suffices to show  \(\alpha \leq L_{1}\) for any \(L_{1}>L\). \(\exists K\) such that \(\sup \left\{\left|\frac{s_{n+1}}{s_{n}}\right|: n \geq K\right\}<L_{1}\). Thus \(\left|\frac{s_{n+1}}{s_{n}}\right|<L_{1}\) for \(n \geq K\), and we write \(\left|s_{n}\right|=\left|\frac{s_{n}}{s_{n-1}}\right| \cdot\left|\frac{s_{n-1}}{s_{n-2}}\right| \cdots\left|\frac{s_{K+1}}{s_{K}}\right| \cdot\left|s_{K}\right|\), such that \(\left|s_{n}\right|<L_{1}^{n-K}\left|s_{K}\right|\). Let \(a=L_{1}^{-N}\left|s_{N}\right| > 0\). Then \(\left|s_{n}\right|^{1 / n}<L_{1} a^{1 / n} \rightarrow L_1\) for \(n>K\). So \(\alpha=\limsup \left|s_{n}\right|^{1 / n} \leq L_{1}\).
+	\end{namedthm*}
+
+	\begin{namedthm*}{Result from Ch 3 Pg 16}
+		If  \(\limsup\left|\frac{a_{n+1}}{a_{n}}\right|<1,\) then the series \(\sum_{n=1}^{\infty} a_{n}\) converges absolutely. If  \(\liminf\left|\frac{a_{n+1}}{a_{n}}\right|>1,\) then the series \(\sum_{n=1}^{\infty} a_{n}\) diverges.
+	\end{namedthm*}
+
+	\begin{namedthm*}{Result from Ch 3 Pg 17}
+		Let \(\rho=\lim \sup \left|a_{n}\right|^{1 / n}\). If \(\rho<1,\) then the series \(\sum_{n=1}^{\infty} a_{n}\) converges absolutely. If \(\rho>1,\) then the series \(\sum_{n=1}^{\infty} a_{n}\) diverges. No conclusion if \(\rho=1\).
+	\end{namedthm*}
+
+	% \begin{namedthm*}{Proof of Pg 17}
+	% 	Suppose \(\rho<1,\) and select \(\epsilon>0\) so that \(\rho+\epsilon<1\). For some K, \(\rho-\epsilon<\sup \left\{\left|a_{n}\right|^{1 / n}: n>N\right\}<\rho+\epsilon\). \(\left|a_{n}\right|<(\rho+\epsilon)^{n}\). The right side makes a geometric series, by the Comp Test, \(\sum|a_n|\) converges. If \(\rho>1,\) then a subsequence of \(\left|a_{n}\right|^{1 / n}\) has
+	% 	limit \(\rho>1 .\) It follows that \(\left|a_{n}\right|>1\) for infinitely many choices
+	% 	of \(n .\) In particular, the sequence \(\left(a_{n}\right)\) cannot converge
+	% 	to \(0,\) so the series \(\sum a_{n}\) cannot converge.
+	% \end{namedthm*}
+
+	\begin{namedthm*}{Proof of Ch 3 Pg 16}
+		\(\liminf \left|\frac{a_{n+1}}{a_{n}}\right| \leq \limsup \left|a_{n}\right|^{1 / n} \leq \limsup \left|\frac{a_{n+1}}{a_{n}}\right|\). Prove using Pg 17.
+	\end{namedthm*}
+
+	\begin{namedthm*}{Root Test}
+		Suppose \(\rho=\lim _{n \rightarrow \infty}\left|a_{n}\right|^{1 / n}\) exists. If \(\rho<1,\) then the series \(\sum_{n=1}^{\infty} a_{n}\) converges absolutely. If \(\rho>1,\) then the series \(\sum_{n=1}^{\infty} a_{n}\) diverges. No conclusion if \(\rho = 1\).
+	\end{namedthm*}
+
+	\begin{namedthm*}{Theorem 3.6.1}
+		If the series \(\sum_{n=1}^{\infty} a_{n}\) converges, then any series obtained by grouping the
+		terms of \(\sum_{n=1}^{\infty} a_{n}\) also converges and has the same value as \(\sum_{n=1}^{\infty} a_{n} .\)
+	\end{namedthm*}
+
+	\begin{namedthm*}{Theorem 3.7.1}
+		If the series \(\sum_{n=1}^{\infty} a_{n}\) converges absolDiutely, then any rearrangement of \(\sum_{n=1}^{\infty} a_{n}\) also converges and has the same sum as \(\sum_{n=1}^{\infty} a_{n} .\)
+	\end{namedthm*}
+
+	\begin{namedthm*}{Theorem 3.8.1}
+		\(e=\sum_{n=0}^{\infty} \frac{1}{n !}\) and for each \(n \in \mathbb{N}, e-\sum_{j=0}^{n}\frac{1}{j !}<\frac{1}{n(n !)}\)
+	\end{namedthm*}
+
+	\begin{namedthm*}{Theorem 3.8.2}
+		\(e\) is irrational.
+	\end{namedthm*}
+
+	\begin{namedthm*}{Sequential criterion}
+		\(\lim _{x \rightarrow a} f(x)=L \Longleftrightarrow \text{If }\left(x_{n}\right)\) is any sequence in the domain of \(f\) such that \(x_{n} \neq a\) for all \(n\) and \(x_{n} \rightarrow a\), then \(f(x_n)\rightarrow L\). Note that L and a can be infinity.
+	\end{namedthm*}
+
+	\begin{namedthm*}{Corollary 4.2.2}
+		\(\lim _{x \rightarrow a} f(x) \neq L \Longleftrightarrow\) there is a sequence \(\left(x_{n}\right)\) in the domain of \(f\) such that \(x_{n} \neq a\) for
+		all n and \(x_{n} \rightarrow a, \text{ but } f\left(x_{n}\right) \not\rightarrow L\)
+	\end{namedthm*}
+
+	\begin{namedthm*}{Divergent Criterion}
+		\textbf{Method 1}. Find a sequence \(\left(x_{n}\right)\) in the domain of \(f\) such that \(x_{n} \neq a\) for all \(n\) and \(x_{n} \rightarrow a,\) but \(\left(f\left(x_{n}\right)\right)\) diverges. \textbf{Method 2}. Find two sequences \(\left(x_{n}\right)\) and \(\left(y_{n}\right)\) in the domain of \(f\) such that \(x_{n} \neq a\) and \(y_{n} \neq a\) for all \(n\) and \(x_{n} \rightarrow a, y_{n} \rightarrow a,\) but \(\lim _{n \rightarrow \infty} f\left(x_{n}\right) \neq \lim _{n \rightarrow \infty} f\left(y_{n}\right)\).
+	\end{namedthm*}
+
+	\begin{namedthm*}{Dirichlet Function}
+		\(f(x)=\left\{\begin{array}{cc}{1} & {\text { if } x \in \mathbb{Q}} \\ {0} & {\text { if } x \notin \mathbb{Q}}\end{array}\right.\) is continuous nowhere.
+	\end{namedthm*}
+
+	\begin{namedthm*}{Lemma 4.2.3}
+		There exists a sequence \(\left(x_{n}\right)\) such that \(x_{n}\) is rational for all \(n, x_{n} \neq c\) for all \(n\) and \(x_{n} \rightarrow c \in \mathbb{R}\), and a sequence \(\left(y_{n}\right)\) such that \(y_{n}\) is irrational for all \(n, y_{n} \neq c\) for all \(n\) and \(y_{n} \rightarrow c\)
+	\end{namedthm*}
+
+	\begin{namedthm*}{Theorem 4.3.1}
+		Suppose \(f\) is defined in a deleted neighborhood of \(x=a\). If \(\lim _{x \rightarrow a} f(x)\) exists, then \(f\) is
+		bounded in a deleted neighborhood of \(x=a,\)that is, \(\exists M>0\) and \(\delta>0\) such that \(0<|x-a|<\delta \Longrightarrow|f(x)| \leq M\).
+	\end{namedthm*}
+
+	\begin{namedthm*}{Theorem 4.3.2}
+		Limit laws apply to functions.
+	\end{namedthm*}
+
+	\begin{namedthm*}{Theorem 4.3.3}
+		If \(f(x) \leq g(x)\) for all \(x\) in a deleted neighborhood of \(x=a\) and both \(\lim _{x \rightarrow a} f(x)\) and
+		\(\lim _{x \rightarrow a} g(x)\) exist, then \(\lim _{x \rightarrow a} f(x) \leq \lim _{x \rightarrow a} g(x)\).
+	\end{namedthm*}
+
+	\begin{namedthm*}{Theorem 4.3.4}
+		If \(f\) is defined in a deleted neighborhood of \(x=a\) and \(\lim _{x \rightarrow a} f(x)=L\) exists and \(L>0,\)
+		then \(\exists \delta>0\) such that
+		\(
+		f(x)>0 \quad \forall x \text { such that } 0<|x-a|<\delta
+		\)
+	\end{namedthm*}
+
+	\begin{namedthm*}{Functions proven to meet seq crit}
+		Polynomial, abs, sqrt, \(x^r\),  \(a^x\), sin and cos, rational functions (f(x)/q(x)),
+	\end{namedthm*}
+
+	\begin{namedthm*}{Thomae's function}
+		Let \(f:(0,1) \rightarrow \mathbb{R}\) be defined by
+		\[
+			f(x)=\left\{\begin{array}{ll}{0} & {\text { if } x \text { is irrational }} \\ {\frac{1}{q}} & {\text { if } x=\frac{p}{q}, p, q \in \mathbb{N} \text { and } \operatorname{gcd}(p, q)=1}\end{array}\right.
+		\]
+		which is discontinuous at all rational points and continuous at all irrational points.
+	\end{namedthm*}
+
+	\begin{namedthm*}{Theorem 5.2.3}
+		Theorem 5.2.3. Suppose that \(f: A \rightarrow \mathbb{R}, g: B \rightarrow \mathbb{R}\) and \(f(A) \subseteq B,\) so that \(g \circ f\) is defined. If \(f\) is
+		continuous on \(A,\) and \(g\) is continuous on \(B,\) then \(g \circ f\) is continuous on \(A .\)
+	\end{namedthm*}
+
+	\begin{namedthm*}{Remarks on continuous functions.}
+		\(\sqrt{\sin x}\) is continuous on \((0,\pi)\).
+	\end{namedthm*}
+
+	\begin{namedthm*}{Theorem 5.3.1}
+		If \(f\) is continuous on \([a, b],\) then \(f\) is bounded on \([a, b]\)
+	\end{namedthm*}
+
+	\begin{namedthm*}{Extreme-value Theorem.}
+		If \(f\) is continuous on \([a, b],\) then there exists \(x_{1}, x_{2} \in[a, b]\) such that
+		\(
+		f\left(x_{1}\right) \leq f(x) \leq f\left(x_{2}\right) \quad \forall x \in[a, b]
+		\)
+	\end{namedthm*}
+
+	\begin{namedthm*}{Location of Roots Theorem}
+		If \(f\) is continuous on \([a, b], f(a)<0<f(b),\) then there exists a point \(c\),
+		in \((a, b)\) such that \(f(c)=0 .\)
+	\end{namedthm*}
+
+	\begin{namedthm*}{Intermediate Value Theorem}	If \(f\) is continuous on \([a, b],\) and 	\(k\) is between \(f(a)\) and \(f(b),\) 	then there exists a point \(c\) in \((a,	 b)\) such that \(f(c)=k .\)
+	\end{namedthm*}
+
+	\begin{namedthm*}{Theorem 5.3.2}
+		If \(f\) is continuous on \([a, b],\) then
+		\(
+		f([a, b])=[m, M],
+		\)
+		where \(m=\inf f([a, b])\) and \(M=\sup f([a, b])\)
+	\end{namedthm*}
+
+	\begin{namedthm*}{Theorem 5.4.1}
+		Let I \(\subseteq \mathbb{R}\) be an interval and \(f: I \rightarrow \mathbb{R}\) be an increasing function. If \(c \in I\) is not an
+		end point of \(I,\) then \(\lim _{x \rightarrow c^{-}} f(x)\) and \(\lim _{x \rightarrow c^{+}} f(x)\) exist and they are given by
+		\(
+		\lim _{x \rightarrow c^{-}} f(x)=\sup \{f(x): x \in I, x<c\} \text { and } \lim _{x \rightarrow c^{+}} f(x)=\inf \{f(x): x \in I, x>c\}
+		\)
+	\end{namedthm*}
+
+	\begin{namedthm*}{Continuous Inverse Theorem}
+		Let I \(\subseteq \mathbb{R}\) be an interval and \(f: I \rightarrow \mathbb{R}\) be a strictly monotone
+		function. If \(f\) is continuous on \(I\) and \(J=f(I),\) then its inverse function \(f^{-1}: J \rightarrow \mathbb{R}\) is strictly
+		monotone and continuous on \(J .\)
+	\end{namedthm*}
+
+	\begin{namedthm*}{Uniform Continuity}
+		\(x, y \in I,|x-y|<\delta \Longrightarrow|f(x)-f(y)|<\varepsilon\).
+	\end{namedthm*}
+
+	\begin{namedthm*}{Sequential Criterion for Uniform Continuity}
+		The function \(f: I \rightarrow \mathbb{R}\) is uniformly continuous on I if and only if for any two sequences \(\left(x_{n}\right)\) and \(\left(y_{n}\right)\)
+		in \(I\) such that \(x_{n}-y_{n} \rightarrow 0,\) we have \(f\left(x_{n}\right)-f\left(y_{n}\right) \rightarrow 0\). Corollary: f not continuous on I if you find two sequences \(\left(x_{n}\right)\) and \(\left(y_{n}\right)\) in \(I\) such that \(x_{n}-y_{n} \rightarrow 0\) but \(f\left(x_{n}\right)-f\left(y_{n}\right) \rightarrow 0\).
+	\end{namedthm*}
+
+	\begin{namedthm*}{Theorem 5.5.3}
+		If \(f\) is continuous on a closed bounded interval \([a, b],\) then it is uniformly continuous
+		on \([a, b] .\)
+	\end{namedthm*}
+
+	\begin{namedthm*}{Theorem 5.5.4}
+		If I is an interval and \(f: I \rightarrow \mathbb{R}\) satisfies the Lipschitz condition on I, that is, there
+		is a \(K>0\) such that
+		\[
+			|f(x)-f(y)| \leq K|x-y|, \quad \forall x, y \in I
+		\]
+		then \(f\) is uniformly continuous on \(I .\)
+	\end{namedthm*}
+
+	\begin{namedthm*}{Theorem 5.5.5}
+		If \(\left.f: I \rightarrow \text { R is uniformly continuous on I and ( } x_{n}\right)\) is a Cauchy sequence in I, then
+		\(\left(f\left(x_{n}\right)\right)\) is a Cauchy sequence.
+	\end{namedthm*}
+
+	\begin{namedthm*}{Theorem 5.5.6}
+		If the function \(f:(a, b) \rightarrow \mathbb{R}\) is uniformly continuous on \((a, b),\) then \(f(a)\) and \(f(b)\)
+		can be defined so that the extended function is continuous on \([a, b] .\) Take a sequence \(\left(x_{n}\right)\) in \((a, b)\) such that \(x_{n} \rightarrow a\). Define \(f(a)=\lim _{n \rightarrow \infty} f\left(x_{n}\right)\). Same for b.
+	\end{namedthm*}
+	% \section{Past Midterm Questions}
+	% \begin{namedthm*}{18/19 Question 5}
+	% 	If \(\left(x_{n}\right)\) converges to 0 and \(\left(y_{n}\right)\) is bounded, then \(\left(x_{n} y_{n}\right)\) converges to \(0 .\)\\
+	% 	\textbf{Solution:} Since \(\left(y_{n}\right)\) is bounded, there exists \(M>0\) such that \(\left|y_{n}\right| \leq M\) for all \(n \in \mathbb{N} .\) Now let \(\varepsilon>0 .\) since \(x_{n} \rightarrow 0\) , there exists \(K \in \mathbb{N}\) such that
+	% 	\[
+	% 		\left|x_{n}-0\right|<\frac{\varepsilon}{M} \quad \forall n \geq K
+	% 	\]
+	% 	Then
+	% 	\[
+	% 		n \geq K \Longrightarrow\left|x_{n} y_{n}-0\right|=\left|x_{n} \| y_{n}\right| \leq \frac{\varepsilon}{M} \cdot M=\varepsilon
+	% 	\]
+	% \end{namedthm*}
+
+	% \begin{namedthm*}{18/19 Question 6}
+	% 	Suppose \((a_n)\) is convergent and \(a = \lim_{n \rightarrow \infty}{a_n}\). For each \(n \in \mathbb{N}\), let
+	% 	$$b_{n} = \frac{1}{n^2}\sum_{j=1}^{n}(n-j+1)a_{j} = \frac{na_{1}+(n-1)a_{2}+\cdots+2a_{n-1}+a_{n}}{n^2}$$.
+	% 	\begin{enumerate}
+	% 		\item Prove that for each \(n \in \mathbb{N}\),$$b_{n} = \frac{1}{n^2}\sum_{j=1}^{n}(n-j+1)(a_{j}-a) + \frac{n+1}{2n}a$$.\\Proof skipped.
+	% 		\item Prove that \((b_{n})\) converges.\\
+	% 		      \textbf{Solution.} Let \(c_{n} = \frac{1}{n^2}\sum_{j=1}^{n}(n-j+1)(a_{j}-a)\) such that \(b_{n} = c_{n} + \frac{n+1}{2n}a\). We want to prove that \(\lim_{n \rightarrow \infty}{c_n} = 0\).
+	% 		      \\Let \(\epsilon > 0\). Since \(\lim_{n \rightarrow \infty}{a_n}=a\), \(\exists K_1 \in \mathbb{N}\) s.t.
+	% 		      $$n \geq K_{1} \rightarrow |a_{n}-a| < \frac{\epsilon}{2}$$.
+	% 		      \\Let \(C = \sum_{j=1}^{K_1}|a_j-a|\). By A.P \(\exists K_2 \in \mathbb{N}\) s.t. \(K_2 > \frac{2C}{\epsilon}\). Let \(K = \max(K_1,K_2)\). Then for \(n \geq K\), we have
+	% 		      \begin{align*}
+	% 			      |c_n - 0| & =  \left|\frac{1}{n^2}\sum_{j=1}^{K_1}(n-j+1)(a_{j}-a)\right|                                              \\
+	% 			                & \leq  \frac{1}{n^2}\sum_{j=1}^{K_1}(n-j+1)|a_{j}-a|                                                        \\ & ~~~~~+ \frac{1}{n^2}\sum_{j=K_{1}+ 1}^{n}(n-j+1)|a_{j}-a|\\
+	% 			                & \leq \frac{1}{n^2}\sum_{j=1}^{K_1}n|a_{j}-a| + \frac{1}{n^2}\sum_{j=K_{1}+ 1}^{n}n\cdot \frac{\epsilon}{2} \\
+	% 			                & \leq \frac{C}{n} + \frac{1}{n^2}(n-K_{1})n\frac{\epsilon}{2}                                               \\
+	% 			                & \leq \frac{C}{K} + \frac{\epsilon}{2}                                                                      \\
+	% 			                & < \frac{C}{2C/\epsilon} + \frac{\epsilon}{2} = \epsilon
+	% 		      \end{align*}
+	% 	\end{enumerate}
+	% \end{namedthm*}
+
+	% \begin{namedthm*}{13/14 Question 6}
+	% 	Let \((a_n)\) and \((b_n)\) be defined by setting $$a_1 = 3, b_1 = 2, a_{n+1} = a_n+ 2b_n \text{ and } b_{n+1}= a_n + b_n \text{ for } n \in \mathbb{N}$$. Moreover, let \(c_n = \frac{a_n}{b_n}\).
+	% 	\begin{enumerate}
+	% 		\item Express \(c_{n+1}\) in terms of \(c_{n}\).
+	% 		      \\\textbf{Solution.} \begin{align*}
+	% 			      c_{n+1} & =\frac{a_{n+1}}{b_{n+1}}
+	% 			      \\&=\frac{a_n+2b_{n}}{a_{n}+b_{n}}
+	% 			      \\&=\frac{\frac{a_n}{b_n} + 2}{\frac{a_n}{b_n} + 1}
+	% 			      \\&=\frac{c_n + 2}{c_n+1}
+	% 		      \end{align*}
+	% 		\item Prove that \(\left|c_{n+1}-\sqrt{2}\right| < r\left|c_{n}-\sqrt{2}\right|\), \(r= \sqrt{2}-1\).
+	% 		      \\\textbf{Solution.} \begin{align*}
+	% 			      \left|c_{n+1}-\sqrt{2}\right| & =\left|\frac{c_n + 2}{c_n + 1}-\sqrt{2}\right|
+	% 			      \\&=\frac{1}{c_n + 1}\left|\left(1-\sqrt{2}\right)c_{n} + \left(2- \sqrt{2}\right)\right|
+	% 			      \\&=\frac{1}{c_n + 1}\left|\left(1-\sqrt{2}\right)\left(c_n- \sqrt{2}\right)\right|
+	% 			      \\&=\frac{\sqrt{2}-1}{c_n + 1}\left|c_{n} - \sqrt{2}\right|
+	% 			      \\&=\frac{r}{c_n + 1}\left|c_{n} - \sqrt{2}\right|
+	% 			      \\& < r\left|c_{n} - \sqrt{2}\right|
+	% 		      \end{align*}
+	% 		\item Prove that \(c_{n}\) converges and find its limit.
+	% 		      \\\textbf{Solution.} For \(n \geq 2\) we have by (ii),
+	% 		      $$\left|c_n-\sqrt{2} \right|< r\left|c_{n-1}-\sqrt{2} \right|<\cdots<r^{n-1}\left|c_{1}-\sqrt{2} \right|$$
+	% 		      Since \(0 < r < 1\), \(e^{n-1} \rightarrow 0\). So $$r^{n-1}\left|c_{1}-\sqrt{2} \right| \rightarrow 0.$$ By the Squeeze Theorem, \(\left|c_{n}-\sqrt{2} \right| \rightarrow 0\). It follows that \(\lim_{n \rightarrow \infty}{c_n} = \sqrt{2}\).
+	% 	\end{enumerate}
+	% \end{namedthm*}
+	% \section{Tutorial Questions}
+	% \begin{namedthm*}{Ratio theorem from Tutorial 4}
+	% 	If $$\lim_{n \rightarrow \infty}{\frac{x_{n+1}}{x_n}}=L$$ where \(L < 1\), then $$\lim_{n \rightarrow \infty}{x_n} = 0$$.
+	% \end{namedthm*}
+	% \begin{namedthm*}{Expansion of \(x^n - y^n\)}
+	% 	$$x^n - y^n = (x-y)(x^{p-1}+x^{p-2}y+x^{p-3}y^{2}+ \cdots +xy^{p-2}+y^{p-1})$$
+	% \end{namedthm*}
+
+	% \begin{namedthm*}{Tutorial 3 Question 2d}
+	% 	Prove $$\lim_{n \rightarrow \infty}{\frac{4^n}{n!}} = 0$$.\\
+	% 	\textbf{Solution.} Notice that
+	% 	$$\frac{4^n}{n!} = \frac{4}{1}\cdot\frac{4}{2}\cdot\frac{4}{3}\cdot\underbrace{\frac{4}{4}\cdot\frac{4}{5}\cdots\cdot\frac{4}{n-1}}_\text{\(\leq 1\)}\cdot\frac{4}{n}$$ when \(n \geq 5\). So $$\frac{4^n}{n!} \leq \frac{256}{6n} < \frac{43}{n}$$. Let \(\epsilon > 0\). By A.P, \(\exists K \in \mathbb{N}\) s.t. \(K > \max(5,\frac{43}{\epsilon})\)...
+	% \end{namedthm*}
+
+
+	% \begin{namedthm*}{Tutorial 1 Question 3}
+	% 	For any \(n \in \mathbb{N}, n > 1\),$$\left(1+\frac{1}{n-1}\right)^{n-1}<\left(1+\frac{1}{n}\right)^{n}$$
+	% \end{namedthm*}
+
+	% \begin{namedthm*}{Tutorial 4 Question 1g}
+
+	% \end{namedthm*}
+
+	% \begin{namedthm*}{Homework 2 Question 2}
+	% 	Let \(S=\left\{\frac{m}{2 n+3 m} : n, m \in \mathbb{N}\right\} .\) Prove that \(\sup S=1 / 3\) and inf \(S=0\)
+	% 	\\\textbf{Solution.} First show that \(\frac{1}{3}\) is an upper bound. Then, let \(\varepsilon>0 .\) By the Archimedean Property, there is a natural number \(m_{0}\) such that \(m_{0}>\frac{1}{\varepsilon} .\) Let
+	% 	\(x_{\varepsilon}=\frac{m_{0}}{2+3 m_{0}} .\) Then
+	% 	\[
+	% 		x_{\varepsilon} \in S \quad \text { and } \quad x_{\varepsilon}=\frac{m_{0}}{2+3 m_{0}}=\frac{1}{3}-\frac{2}{3\left(2+3 m_{0}\right)}>\frac{1}{3}-\frac{1}{m_{0}}>\frac{1}{3}-\varepsilon
+	% 	\]
+	% 	By Lemma \(1.9 .1,\) sup \(S=\frac{1}{3} .\)\\
+	% 	On the other hand, 0 is clearly a lower bound of \(S\) . Let \(\varepsilon>0 .\) By the Archimedean Property, there
+	% 	is a natural number \(n_{0}\) such that \(n_{0}>\frac{1}{\varepsilon} .\) Let \(y_{\varepsilon}=\frac{1}{2 n_{0}+3} .\) Then
+	% 	\[
+	% 		y_{\varepsilon} \in S \quad \text { and } \quad y_{\varepsilon}=\frac{1}{2 n_{0}+3}<\frac{1}{n_{0}}<0+\varepsilon
+	% 	\]
+	% 	By the result of Question \(\mathrm{H} 2,\) inf \(S=0\)
+	% \end{namedthm*}
+
+	% \begin{namedthm*}{Results from Tutorial 2}~
+	% 	\begin{enumerate}
+	% 		\item If \(0<a<b,\) then \(a^{n}<b^{n}\) for every \(n \in \mathbb{N}\)
+	% 		\item If \(0<a<b\) and \(r \in \mathbb{Q}\) with \(r>0,\) then \(a^{r}<b^{r}\)
+	% 		\item If \(A\) and \(B\) are bounded nonempty subsets of \(\mathbb{R}\) then \(\sup (A \cup B)=\max (\sup A, \sup B)\)
+	% 	\end{enumerate}
+	% \end{namedthm*}
+
+	% \begin{namedthm*}{Tutorial 3 Question 7}
+	% 	If \(\lim _{n \rightarrow \infty} x_{n}=x\) , then
+	% 	\[
+	% 		\lim _{n \rightarrow \infty} \frac{x_{1}+x_{2}+\cdots+x_{n}}{n}=x
+	% 	\]
+	% \end{namedthm*}
+
+
+
+\end{multicols}
+
+\end{document}
